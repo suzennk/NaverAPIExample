@@ -50,16 +50,17 @@
                                     </textField>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MPM-f2-kOA">
-                                <rect key="frame" x="172" y="362" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MPM-f2-kOA">
+                                <rect key="frame" x="172" y="359" width="30" height="30"/>
                                 <state key="normal" title="검색"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="0.1385113441780822" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="MPM-f2-kOA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BQ0-5l-XG0"/>
                             <constraint firstItem="iIA-Iu-cpB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-50" id="GsU-26-ELk"/>
                             <constraint firstItem="iIA-Iu-cpB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ITH-Ob-XyR"/>
+                            <constraint firstItem="MPM-f2-kOA" firstAttribute="top" secondItem="iIA-Iu-cpB" secondAttribute="bottom" constant="20" id="Tvc-c2-UQz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
