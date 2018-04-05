@@ -11,6 +11,7 @@
 		FC1AC7232076095E0082F677 /* MoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1AC7222076095E0082F677 /* MoviesTableViewController.swift */; };
 		FC1AC72520760D6A0082F677 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1AC72420760D6A0082F677 /* MovieDetailViewController.swift */; };
 		FC1AC72820760D9A0082F677 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1AC72720760D9A0082F677 /* Model.swift */; };
+		FC1AC72A2076154C0082F677 /* MoviesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1AC7292076154C0082F677 /* MoviesTableViewCell.swift */; };
 		FCD5397B2073871C0085FE4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD5397A2073871C0085FE4E /* AppDelegate.swift */; };
 		FCD539802073871C0085FE4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCD5397E2073871C0085FE4E /* Main.storyboard */; };
 		FCD539822073871E0085FE4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCD539812073871E0085FE4E /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 		FC1AC7222076095E0082F677 /* MoviesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewController.swift; sourceTree = "<group>"; };
 		FC1AC72420760D6A0082F677 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		FC1AC72720760D9A0082F677 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		FC1AC7292076154C0082F677 /* MoviesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewCell.swift; sourceTree = "<group>"; };
 		FCD539772073871C0085FE4E /* NaverAPIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NaverAPIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCD5397A2073871C0085FE4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCD5397F2073871C0085FE4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				FC1AC7222076095E0082F677 /* MoviesTableViewController.swift */,
 				FC1AC72420760D6A0082F677 /* MovieDetailViewController.swift */,
 				FC1AC72720760D9A0082F677 /* Model.swift */,
+				FC1AC7292076154C0082F677 /* MoviesTableViewCell.swift */,
 			);
 			path = NaverAPIExample;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC1AC72A2076154C0082F677 /* MoviesTableViewCell.swift in Sources */,
 				FC1AC72820760D9A0082F677 /* Model.swift in Sources */,
 				FC1AC72520760D6A0082F677 /* MovieDetailViewController.swift in Sources */,
 				FC1AC7232076095E0082F677 /* MoviesTableViewController.swift in Sources */,
