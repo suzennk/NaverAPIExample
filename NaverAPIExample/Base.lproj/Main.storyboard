@@ -70,7 +70,7 @@
                     <navigationItem key="navigationItem" id="kGZ-aB-nPD"/>
                     <connections>
                         <outlet property="searchTextField" destination="0hL-Sx-9cO" id="osI-5b-Ej6"/>
-                        <segue destination="YME-DK-mv3" kind="show" id="beT-i3-caD"/>
+                        <segue destination="YME-DK-mv3" kind="show" identifier="searchSegue" id="beT-i3-caD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
