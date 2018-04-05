@@ -9,7 +9,12 @@
 import UIKit
 
 class MovieDetailViewController: UIViewController {
-
+    
+    @IBOutlet weak var webView: UIWebView!
+    @IBAction func reloadButtonPressed(_ sender: Any) {
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

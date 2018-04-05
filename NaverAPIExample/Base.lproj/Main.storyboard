@@ -53,9 +53,12 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MPM-f2-kOA">
                                 <rect key="frame" x="172" y="359" width="30" height="30"/>
                                 <state key="normal" title="검색"/>
+                                <connections>
+                                    <action selector="searchButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8XU-VX-mmJ"/>
+                                </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="0.1385113441780822" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.97305089235305786" green="0.94494408751293035" blue="0.81135380988922579" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="MPM-f2-kOA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BQ0-5l-XG0"/>
                             <constraint firstItem="iIA-Iu-cpB" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-50" id="GsU-26-ELk"/>
@@ -66,6 +69,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="kGZ-aB-nPD"/>
                     <connections>
+                        <outlet property="searchTextField" destination="0hL-Sx-9cO" id="osI-5b-Ej6"/>
                         <segue destination="YME-DK-mv3" kind="show" id="beT-i3-caD"/>
                     </connections>
                 </viewController>
@@ -182,6 +186,11 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="actorsLabel" destination="IPI-i9-5h4" id="HsA-d5-7FT"/>
+                                    <outlet property="directorLabel" destination="iJW-Bb-KMI" id="yJp-ki-8sl"/>
+                                    <outlet property="posterImageView" destination="Oay-ET-cxa" id="HBR-q0-VaW"/>
+                                    <outlet property="titleYearLabel" destination="je2-rg-se3" id="8oK-UF-W9B"/>
+                                    <outlet property="userRatingLabel" destination="ger-II-zsp" id="TDw-vY-x2L"/>
                                     <segue destination="MNT-9k-H70" kind="show" id="4TO-ne-Toj"/>
                                 </connections>
                             </tableViewCell>
@@ -211,7 +220,11 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Uq-3w-Ri2">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem systemItem="refresh" id="mGX-FZ-CJV"/>
+                                    <barButtonItem systemItem="refresh" id="mGX-FZ-CJV">
+                                        <connections>
+                                            <action selector="reloadButtonPressed:" destination="MNT-9k-H70" id="AHw-co-i5z"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -227,6 +240,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Rpc-sD-Y6y"/>
                     </view>
+                    <connections>
+                        <outlet property="webView" destination="slc-5b-yYP" id="MWX-Sl-CfM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1p6-53-ztv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
