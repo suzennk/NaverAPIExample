@@ -23,13 +23,14 @@ class Movie {
         
     }
     
-    init (title:String, link:String, imageURL:String, pubDate:String, director:String, actors:String, userRating:String) {
-        self.title = title
-        self.link = link
-        self.imageURL = imageURL
-        self.pubDate = pubDate
-        self.director = director
-        self.actors = actors
-        self.userRating = userRating
+    func getCoverImage(withURL imageURL: String) -> UIImage? {
+        if let url = URL(string: imageURL) {
+            if let imgData = try? Data(contentsOf: url) {
+                if let image = UIImage(data: imgData) {
+                    return image
+                }
+            }
+        }
+        return nil
     }
 }

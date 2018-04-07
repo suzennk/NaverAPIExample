@@ -146,6 +146,26 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         cell.directorLabel.text = "\(director)"
         cell.actorsLabel.text = "\(actor)"
         
+        // Async activity
+        // 영화 포스터 이미지 불러오기
+        if let posterImage = movie.image {
+            cell.posterImageView.image = posterImage
+        } else {
+            cell.posterImageView.image = UIImage(named: "noImage")
+            if let posterImageUrl = movie.imageURL {
+                DispatchQueue.main.async(execute: {
+                    movie.image = movie.getCoverImage(withURL: movie.imageURL!)
+                    guard let thumbImage = movie.image else {
+                        return
+                    }
+                    cell.posterImageView.image = thumbImage
+                })
+            }
+            
+            
+        }
+        
+        
         return cell
     }
  
