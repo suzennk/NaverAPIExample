@@ -1,1 +1,8 @@
-# NaverAPIExample
+# 네이버 오픈 API를 사용하여 영화 정보 불러오기!
+
+## 1. 네이버 오픈 API
+
+## 2. 비동기 작업
+
+## 3. UIWebView 사용
+
