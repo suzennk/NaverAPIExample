@@ -13,8 +13,9 @@ class MovieDetailViewController: UIViewController {
     var urlString:String?
     
     @IBOutlet weak var webView: UIWebView!
+    
     @IBAction func reloadButtonPressed(_ sender: Any) {
-        
+        webView.reload()
     }
     
     override func viewDidLoad() {
