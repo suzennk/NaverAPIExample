@@ -10,6 +10,8 @@ import UIKit
 
 class MovieDetailViewController: UIViewController {
     
+    var urlString:String?
+    
     @IBOutlet weak var webView: UIWebView!
     @IBAction func reloadButtonPressed(_ sender: Any) {
         
@@ -17,7 +19,11 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if let urlStr = urlString {
+            let url = URL (string: urlStr);
+            let request = URLRequest(url: url!);
+            webView.loadRequest(request);
+        }
         // Do any additional setup after loading the view.
     }
 

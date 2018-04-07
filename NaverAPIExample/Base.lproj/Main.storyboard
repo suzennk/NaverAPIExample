@@ -115,13 +115,16 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="grB-wQ-ZK9">
-                                                            <rect key="frame" x="0.0" y="43.5" width="231" height="66.5"/>
+                                                            <rect key="frame" x="0.0" y="43.5" width="259" height="66.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Y41-lT-Srd" userLabel="Rating Stack View">
                                                                     <rect key="frame" x="0.0" y="0.0" width="68.5" height="20.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="평점" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQ1-df-Th2">
                                                                             <rect key="frame" x="0.0" y="0.0" width="26" height="20.5"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="26" id="S80-Ve-yOG"/>
+                                                                            </constraints>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -139,6 +142,9 @@
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="감독" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hig-e2-gDB">
                                                                             <rect key="frame" x="0.0" y="0.0" width="26" height="18"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="26" id="CQE-AH-VXf"/>
+                                                                            </constraints>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -152,26 +158,36 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ajK-lU-JAo" userLabel="Actors Stack View">
-                                                                    <rect key="frame" x="0.0" y="48.5" width="231" height="18"/>
+                                                                    <rect key="frame" x="0.0" y="48.5" width="259" height="18"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="출연 배우" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWg-60-Gn6">
                                                                             <rect key="frame" x="0.0" y="0.0" width="56" height="18"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="56" id="gEt-qV-Map"/>
+                                                                            </constraints>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="김태리|류준열|문소리|진기주" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPI-i9-5h4">
-                                                                            <rect key="frame" x="61" y="0.0" width="170" height="18"/>
+                                                                            <rect key="frame" x="61" y="0.0" width="198" height="18"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="trailing" secondItem="IPI-i9-5h4" secondAttribute="trailing" id="lYu-fm-4iO"/>
+                                                                    </constraints>
                                                                 </stackView>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="trailing" secondItem="ajK-lU-JAo" secondAttribute="trailing" id="aDv-Vp-Hga"/>
+                                                            </constraints>
                                                         </stackView>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="grB-wQ-ZK9" secondAttribute="trailing" id="5zd-wt-1YU"/>
                                                         <constraint firstAttribute="height" constant="110" id="rDD-af-ZJo"/>
                                                     </constraints>
                                                 </stackView>

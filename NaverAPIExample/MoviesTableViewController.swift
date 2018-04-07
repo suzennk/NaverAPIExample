@@ -150,15 +150,20 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     }
  
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if let movieDetailVC = segue.destination as? MovieDetailViewController {
+            if let index = tableView.indexPathForSelectedRow?.row {
+                movieDetailVC.urlString = movies[index].link
+            }
+        }
     }
-    */
+
 
 }
 
