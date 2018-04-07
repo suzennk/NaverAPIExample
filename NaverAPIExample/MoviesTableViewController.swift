@@ -7,76 +7,148 @@
 //
 
 import UIKit
+import os.log
 
-class MoviesTableViewController: UITableViewController {
+class MoviesTableViewController: UITableViewController, XMLParserDelegate{
 
-    var query:String?
+    let clientID        = "huN1_ueBcLHV9AnTNwpi"    // ClientID
+    let clientSecret    = "kb3OGCZ9rC"              // ClientSecret
     
+    var queryText:String?           // SearchVC에서 받아 오는 검색어
+    var movies:[Movie]      = []    // API를 통해 받아온 결과를 저장할 array
+    
+    // XML delegate
+    var strXMLData: String?         = ""   // xml 데이터를 저장
+    var currentElement: String?     = ""   // 현재 item의 element를 저장
+    var currentString: String       = ""   // 현재 element의 내용을 저장
+    var item: Movie?                = nil  // 검색하여 만들어지는 Movie 객체
+    var flag: Bool                  = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchMovies()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // MARK: - NaverAPI
+    
+    func searchMovies() {
+        // movies 초기화
+        movies = []
+        
+        // queryText가 없으면 return
+        guard let query = queryText else {
+            return
+        }
+        
+        let urlString = "https://openapi.naver.com/v1/search/movie.xml?query=" + query
+        let urlWithPercentEscapes = urlString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+        let url = URL(string: urlWithPercentEscapes!)
+        
+        var request = URLRequest(url: url!)
+        request.addValue("application/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(clientID, forHTTPHeaderField: "X-Naver-Client-Id")
+        request.addValue(clientSecret, forHTTPHeaderField: "X-Naver-Client-Secret")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            // 에러가 있으면 리턴
+            guard error == nil else {
+                print(error)
+                return
+            }
+            
+            // 데이터가 비었으면 출력 후 리턴
+            guard let data = data else {
+                print("Data is empty")
+                return
+            }
+            
+            // 수신한 데이터 출력, 디버깅 목적
+            print(String(data: data, encoding: String.Encoding.utf8))
+            
+            // 데이터 초기화
+            self.item?.actors = ""
+            self.item?.director = ""
+            self.item?.imageURL = ""
+            self.item?.link = ""
+            self.item?.pubDate = ""
+            self.item?.title = ""
+            self.item?.userRating = ""
+            
+            // Parse the XML
+            let parser = XMLParser(data: Data(data))
+            parser.delegate = self
+            let success:Bool = parser.parse()
+            if success {
+                print("parse success!")
+                print(self.strXMLData)
+            } else {
+                print("parse failure!")
+            }
+        }
+        task.resume()
     }
-
+    
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        if elementName == "title" || elementName == "link" || elementName == "image" || elementName == "pubDate" || elementName == "director" || elementName == "actor" || elementName == "userRating" {
+            flag = true
+            currentString = ""
+            if elementName == "title" {
+                item = Movie()
+            }
+        }
+    }
+    
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        currentString += string
+    }
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        if elementName == "title" {
+            item?.title = currentString.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+            print("title: \(currentString)")
+        } else if elementName == "link" {
+            item?.link = currentString
+        } else if elementName == "image" {
+            item?.imageURL = currentString
+        } else if elementName == "pubDate" {
+            item?.pubDate = currentString
+        } else if elementName == "director" {
+            item?.director = currentString
+        } else if elementName == "actor" {
+            item?.actors = currentString
+        } else if elementName == "userRating" {
+            item?.userRating = currentString
+            movies.append(self.item!)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return movies.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCellIdentifier", for: indexPath) as! MoviesTableViewCell
+        let movie = movies[indexPath.row]
+        guard let title = movie.title, let pubDate = movie.pubDate, let userRating = movie.userRating, let director = movie.director, let actor = movie.actors else {
+            return cell
+        }
+        
+        cell.titleANdYearLabel.text = "\(title)(\(pubDate))"
+        cell.userRatingLabel.text = "\(userRating)"
+        cell.directorLabel.text = "\(director)"
+        cell.actorsLabel.text = "\(actor)"
+        
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
+ 
 
     /*
     // MARK: - Navigation
@@ -89,3 +161,4 @@ class MoviesTableViewController: UITableViewController {
     */
 
 }
+

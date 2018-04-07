@@ -86,7 +86,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="126" id="gX3-4S-Axx" customClass="MoviesTableViewCell" customModule="NaverAPIExample" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCellIdentifier" rowHeight="126" id="gX3-4S-Axx" customClass="MoviesTableViewCell" customModule="NaverAPIExample" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="126"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gX3-4S-Axx" id="Fa3-UW-bgD">
@@ -189,7 +189,7 @@
                                     <outlet property="actorsLabel" destination="IPI-i9-5h4" id="HsA-d5-7FT"/>
                                     <outlet property="directorLabel" destination="iJW-Bb-KMI" id="yJp-ki-8sl"/>
                                     <outlet property="posterImageView" destination="Oay-ET-cxa" id="HBR-q0-VaW"/>
-                                    <outlet property="titleYearLabel" destination="je2-rg-se3" id="8oK-UF-W9B"/>
+                                    <outlet property="titleANdYearLabel" destination="je2-rg-se3" id="rmd-az-ng2"/>
                                     <outlet property="userRatingLabel" destination="ger-II-zsp" id="TDw-vY-x2L"/>
                                     <segue destination="MNT-9k-H70" kind="show" id="4TO-ne-Toj"/>
                                 </connections>

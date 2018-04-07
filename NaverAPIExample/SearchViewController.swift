@@ -37,7 +37,7 @@ class SearchViewController: UIViewController {
         // Pass the selected object to the new view controller.
         if let moviesVC = segue.destination as? MoviesTableViewController {
             if let text = searchTextField.text {
-                moviesVC.query = text
+                moviesVC.queryText = text
             }
         }
     }

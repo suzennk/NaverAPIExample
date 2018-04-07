@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NaverAPIExample/MoviesTableViewController.swift"
+            timestampString = "544757818.738806"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "searchMovies()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NaverAPIExample/MoviesTableViewController.swift"
+            timestampString = "544757818.7393889"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "parser(_:didStartElement:namespaceURI:qualifiedName:attributes:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 4 of NaverAPIExample.MoviesTableViewController.parser(__ObjC.XMLParser, didStartElement: Swift.String, namespaceURI: Swift.Optional&lt;Swift.String&gt;, qualifiedName: Swift.Optional&lt;Swift.String&gt;, attributes: Swift.Dictionary&lt;Swift.String, Swift.String&gt;) -&gt; ()"
+                  moduleName = "NaverAPIExample"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbp04/Documents/NaverAPIExample/NaverAPIExample/MoviesTableViewController.swift"
+                  timestampString = "544757141.5461169"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "90"
+                  endingLineNumber = "90"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NaverAPIExample.MoviesTableViewController.parser(__ObjC.XMLParser, didStartElement: Swift.String, namespaceURI: Swift.Optional&lt;Swift.String&gt;, qualifiedName: Swift.Optional&lt;Swift.String&gt;, attributes: Swift.Dictionary&lt;Swift.String, Swift.String&gt;) -&gt; ()"
+                  moduleName = "NaverAPIExample"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mbp04/Documents/NaverAPIExample/NaverAPIExample/MoviesTableViewController.swift"
+                  timestampString = "544757141.548277"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
+                  offsetFromSymbolStart = "121">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

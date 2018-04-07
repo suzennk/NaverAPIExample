@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "closure #1 in MoviesTableViewController.searchMovies():MoviesTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MoviesTableViewController.parser(_:foundCharacters:):MoviesTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MoviesTableViewController.parser(_:didEndElement:namespaceURI:qualifiedName:):MoviesTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MoviesTableViewController.parser(_:didStartElement:namespaceURI:qualifiedName:attributes:):MoviesTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "movies">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
