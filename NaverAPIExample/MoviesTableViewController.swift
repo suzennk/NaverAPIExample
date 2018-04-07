@@ -10,7 +10,8 @@ import UIKit
 import os.log
 
 class MoviesTableViewController: UITableViewController, XMLParserDelegate{
-
+    @IBOutlet weak var titleNavigationItem: UINavigationItem!
+    
     let clientID        = "huN1_ueBcLHV9AnTNwpi"    // ClientID
     let clientSecret    = "kb3OGCZ9rC"              // ClientSecret
     
@@ -22,9 +23,12 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     var currentElement: String?     = ""   // 현재 item의 element를 저장
     var currentString: String       = ""   // 현재 element의 내용을 저장
     var item: Movie?                = nil  // 검색하여 만들어지는 Movie 객체
-    var flag: Bool                  = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let title = queryText {
+            titleNavigationItem.title = title
+        }
         searchMovies()
     }
 
@@ -89,7 +93,6 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "title" || elementName == "link" || elementName == "image" || elementName == "pubDate" || elementName == "director" || elementName == "actor" || elementName == "userRating" {
-            flag = true
             currentString = ""
             if elementName == "title" {
                 item = Movie()
@@ -104,7 +107,6 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "title" {
             item?.title = currentString.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
-            print("title: \(currentString)")
         } else if elementName == "link" {
             item?.link = currentString
         } else if elementName == "image" {
@@ -113,8 +115,10 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
             item?.pubDate = currentString
         } else if elementName == "director" {
             item?.director = currentString
+            item?.director?.removeLast()
         } else if elementName == "actor" {
             item?.actors = currentString
+            item?.actors?.removeLast()
         } else if elementName == "userRating" {
             item?.userRating = currentString
             movies.append(self.item!)
@@ -154,7 +158,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
             cell.posterImageView.image = UIImage(named: "noImage")
             if let posterImageUrl = movie.imageURL {
                 DispatchQueue.main.async(execute: {
-                    movie.image = movie.getCoverImage(withURL: movie.imageURL!)
+                    movie.image = movie.getCoverImage(withURL: posterImageUrl)
                     guard let thumbImage = movie.image else {
                         return
                     }
@@ -173,10 +177,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if let movieDetailVC = segue.destination as? MovieDetailViewController {
             if let index = tableView.indexPathForSelectedRow?.row {
                 movieDetailVC.urlString = movies[index].link
