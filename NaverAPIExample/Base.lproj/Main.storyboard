@@ -75,7 +75,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1076" y="132.68365817091455"/>
+            <point key="canvasLocation" x="828" y="-433"/>
         </scene>
         <!--Title-->
         <scene sceneID="Oct-4U-SrS">
@@ -122,9 +122,6 @@
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="평점" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQ1-df-Th2">
                                                                             <rect key="frame" x="0.0" y="0.0" width="26" height="20.5"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="width" constant="26" id="S80-Ve-yOG"/>
-                                                                            </constraints>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -142,9 +139,6 @@
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="감독" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hig-e2-gDB">
                                                                             <rect key="frame" x="0.0" y="0.0" width="26" height="18"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="width" constant="26" id="CQE-AH-VXf"/>
-                                                                            </constraints>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -160,17 +154,17 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ajK-lU-JAo" userLabel="Actors Stack View">
                                                                     <rect key="frame" x="0.0" y="48.5" width="259" height="18"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="출연 배우" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWg-60-Gn6">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="56" height="18"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="출연 배우" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWg-60-Gn6">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="84" height="18"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="width" constant="56" id="gEt-qV-Map"/>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="56" id="gEt-qV-Map"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="김태리|류준열|문소리|진기주" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPI-i9-5h4">
-                                                                            <rect key="frame" x="61" y="0.0" width="198" height="18"/>
+                                                                            <rect key="frame" x="89" y="0.0" width="170" height="18"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -223,7 +217,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vIk-B9-aQe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1832.8" y="132.68365817091455"/>
+            <point key="canvasLocation" x="1585" y="-433"/>
         </scene>
         <!--Movie Detail View Controller-->
         <scene sceneID="Vfw-oi-YzL">
@@ -282,7 +276,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1p6-53-ztv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2564" y="133"/>
+            <point key="canvasLocation" x="2378" y="-433"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hg9-fq-HRP">
@@ -300,7 +294,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M46-eJ-8bj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="132.68365817091455"/>
+            <point key="canvasLocation" x="81" y="-433"/>
         </scene>
     </scenes>
     <resources>
