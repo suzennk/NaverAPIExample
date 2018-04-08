@@ -233,13 +233,15 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         return
     }
 ```
-여기서는 movie 객체의 imageURL이 존재하는지 먼저 확인한 다음, imageURL을 가지고 URL 객체를 생성하여 이를 가지고 이미지 데이터를 불러옵니다. 이미지 데이터를 사용해서 UIImage를 생성하고, 
+여기서는 movie 객체의 imageURL이 존재하는지 먼저 확인한 다음, imageURL을 가지고 URL 객체를 생성하여 이를 가지고 이미지 데이터를 불러옵니다. 이미지 데이터를 사용해서 UIImage를 생성하고, self의 image에 저장합니다. 
 
 ``` Swift
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "movieCellIdentifier", for: indexPath) as! MoviesTableViewCell
         let movie = movies[indexPath.row]
         
+	// cell 구성 부분 생략
+
         // Async activity
         // 영화 포스터 이미지 불러오기
         if let posterImage = movie.image {
@@ -257,7 +259,8 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         return cell
     }
 ```
-
+**9-10**: image가 이미 존재하면 즉시 이미지를 cell에 나타냅니다.
+**11-20**: 이미지가 없으면, 우선 디폴트 이미지를 cell에 먼저 나타내고 비동기 작업 큐에 이미지 다운로드 작업을 넣어둔 다음, 이미지 다운로드 작업이 끝나면 포스터 이미지를 cell에 나타냅니다.    
  
 
 ### STEP 3. UIWebView 사용
