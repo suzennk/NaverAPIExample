@@ -14,7 +14,9 @@
 시작하기에 앞서 [GitHub](https://github.com/gfsusan/NaverAPIExample)에서 스타터 프로젝트를 다운로드하여 각 단계를 따라가시면 되겠습니다!
 프로젝트를 처음부터 만드시고 싶으신 분들은 아래 사진과 같이 UI를 구성해주시면 되겠습니다. 프로젝트를 만드실 때 애플리케이션 이름과 애플리케이션 Bundle ID를 기억해 두었다가 오픈API 신청 시 기입하시기 바랍니다. 
 ![Application UI](/tb000_media/0-2.png)
+
 ### STEP 1. 네이버 오픈 API
+
 #### 애플리케이션 등록
 네이버 오픈 API를 사용하기 위해서는 네이버로부터 **클라이언트 아이디**와 **클라이언트 시크릿**을 발급받아야 합니다. 이는 네이버 오픈API 사용자가 인증된 사용자인지 확인하는 고유한 아이디와 비밀번호로, 네이버 개발자센터의 **애플리케이션 등록** 메뉴에서 [애플리케이션을 등록](https://developers.naver.com/apps/#/register)하면 발급되는 값입니다. 
 
@@ -92,8 +94,15 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
 ```
 우선, 다음과 같이 MoviesTableViewController에게 XMLParserDelegate 프로토콜을 적용합니다. 
 다음으로 네이버 개발자 센터에서 발급받은 **클라이언트 아이디**와 **클라이언트 시크릿**을 변수에 저장합니다. 
+![Xml Data Example](/tb000_media/1-3.png)
+**strXMLData**에는 https://openapi.naver.com에 요청한 쿼리에 대한 응답인 xml 데이터가 저장됩니다. xml 데이터는 위와 같은 형식으로 이루어져 있습니다. 우리가 주의 깊게 볼 부분은 <item> 태그로 둘러싸여 있는 부분입니다. **title**, **link**, **subtitle**, **pubDate**, **director**, **actor**, **userRating** 등을 **element**라고 부르며, 각 element는 <title>과 같이 꺽쇄로 둘러싸여 있습니다. 이제 이 데이터를 Parse(분석, 또는 쪼갬)하여 Movie객체를 만들 것입니다. 따라서 currentElement는 현재 element를 알려주는 변수이고, currentString은 현재 element에 해당하는 데이터를 저장하게 될 변수입니다. **item**은 Movie의 객체로, 한 개의 item을 Parsing에 성공하면 하나의 객체가 완성되는 것입니다.
 
+``` Swift
 
+```
+**10-12**: 요청 텍스트를 담아 url을 생성합니다. Line 10의 코드를 작성하는 이유는 **query** 문자열 안에 url에 허용되지 않는 문자가 들어있을 때 인코딩을 통해서 HTTP 요청을 보낼 때 문제가 생기지 않도록 하는 것입니다. 
+**14-17**: URL Request를 생성합니다. URL 요청에는 앞서 발급받은 클라이언트 아이디와 클라이언트 시크릿을 함께 전송합니다. 
+**  
 
 
 ### STEP 2. 비동기 작업

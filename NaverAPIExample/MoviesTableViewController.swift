@@ -15,13 +15,13 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     let clientID        = "huN1_ueBcLHV9AnTNwpi"    // ClientID
     let clientSecret    = "kb3OGCZ9rC"              // ClientSecret
     
-    var queryText:String?           // SearchVC에서 받아 오는 검색어
-    var movies:[Movie]      = []    // API를 통해 받아온 결과를 저장할 array
+    var queryText:String?                   // SearchVC에서 받아 오는 검색어
+    var movies:[Movie]              = []    // API를 통해 받아온 결과를 저장할 array
     
     // XML delegate
     var strXMLData: String?         = ""   // xml 데이터를 저장
-    var currentElement: String?     = ""   // 현재 item의 element를 저장
-    var currentString: String       = ""   // 현재 element의 내용을 저장
+    var currentTag: String?         = ""   // 현재 item의 tag를 저장
+    var currentElement: String      = ""   // 현재 element의 내용을 저장
     var item: Movie?                = nil  // 검색하여 만들어지는 Movie 객체
     
     override func viewDidLoad() {
@@ -65,9 +65,6 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
                 return
             }
             
-            // 수신한 데이터 출력, 디버깅 목적
-            print(String(data: data, encoding: String.Encoding.utf8))
-            
             // 데이터 초기화
             self.item?.actors = ""
             self.item?.director = ""
@@ -92,7 +89,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if elementName == "title" || elementName == "link" || elementName == "image" || elementName == "pubDate" || elementName == "director" || elementName == "actor" || elementName == "userRating" {
-            currentString = ""
+            currentElement = ""
             if elementName == "title" {
                 item = Movie()
             }
@@ -100,30 +97,30 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     }
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        currentString += string
+        currentElement += string
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "title" {
-            item?.title = currentString.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+            item?.title = currentElement.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         } else if elementName == "link" {
-            item?.link = currentString
+            item?.link = currentElement
         } else if elementName == "image" {
-            item?.imageURL = currentString
+            item?.imageURL = currentElement
         } else if elementName == "pubDate" {
-            item?.pubDate = currentString
+            item?.pubDate = currentElement
         } else if elementName == "director" {
-            item?.director = currentString
+            item?.director = currentElement
             if item?.director != "" {
                 item?.director?.removeLast()
             }
         } else if elementName == "actor" {
-            item?.actors = currentString
+            item?.actors = currentElement
             if item?.actors != "" {
                 item?.actors?.removeLast()
             }
         } else if elementName == "userRating" {
-            item?.userRating = currentString
+            item?.userRating = currentElement
             movies.append(self.item!)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
