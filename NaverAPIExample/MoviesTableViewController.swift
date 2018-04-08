@@ -176,15 +176,14 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
             cell.posterImageView.image = posterImage
         } else {
             cell.posterImageView.image = UIImage(named: "noImage")
-            if let posterImageUrl = movie.imageURL {
-                DispatchQueue.main.async(execute: {
-                    movie.image = movie.getPosterImage()
-                    guard let thumbImage = movie.image else {
-                        return
-                    }
-                    cell.posterImageView.image = thumbImage
-                })
-            }
+            
+            DispatchQueue.main.async(execute: {
+                movie.getPosterImage()
+                guard let thumbImage = movie.image else {
+                    return
+                }
+                cell.posterImageView.image = thumbImage
+            })
             
             
         }

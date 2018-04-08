@@ -23,17 +23,17 @@ class Movie {
         
     }
     
-    func getPosterImage() -> UIImage? {
+    func getPosterImage() {
         guard imageURL != nil else {
-            return nil
+            return
         }
         if let url = URL(string: imageURL!) {
             if let imgData = try? Data(contentsOf: url) {
                 if let image = UIImage(data: imgData) {
-                    return image
+                    self.image = image
                 }
             }
         }
-        return nil
+        return
     }
 }

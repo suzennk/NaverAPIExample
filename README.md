@@ -219,8 +219,21 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
 쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위함입니다. 따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰가 로딩된 이후에 차례로 작업을 해 나가는 것입니다. 
 이번 단계에서는 MoviesTableVC가 로딩된 이후에 차례로 영화의 포스터 이미지를 다운로드 받아 테이블 뷰에 표시하는 기능을 구현할 것입니다. 우선 [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)의 **getPosterImage()**메소드를 구현하고, [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)의 **tableView(cellForRowAt)** 메소드를 살펴봅시다. 
 ``` Swift
-
+    func getPosterImage() {
+        guard imageURL != nil else {
+            return nil
+        }
+        if let url = URL(string: imageURL!) {
+            if let imgData = try? Data(contentsOf: url) {
+                if let image = UIImage(data: imgData) {
+		    self.image = image
+                }
+            }
+        }
+        return
+    }
 ```
+여기서는 movie 객체의 imageURL이 존재하는지 먼저 확인한 다음, imageURL을 가지고 URL 객체를 생성하여 이를 가지고 이미지 데이터를 불러옵니다. 이미지 데이터를 사용해서 UIImage를 생성하고, 
 
 ``` Swift
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -233,16 +246,14 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
             cell.posterImageView.image = posterImage
         } else {
             cell.posterImageView.image = UIImage(named: "noImage")
-            if let posterImageUrl = movie.imageURL {
-                DispatchQueue.main.async(execute: {
-                    movie.image = movie.getPosterImage()
-                    guard let thumbImage = movie.image else {
-                        return
-                    }
-                    cell.posterImageView.image = thumbImage
-                })
-            }
-        }        
+            DispatchQueue.main.async(execute: {
+                movie.getPosterImage()
+                guard let thumbImage = movie.image else {
+                    return
+                }
+                cell.posterImageView.image = thumbImage
+            })
+        }
         return cell
     }
 ```
