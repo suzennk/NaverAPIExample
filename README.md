@@ -12,7 +12,7 @@
 ## 시작하기
 ### STEP 0. 스타터 프로젝트 다운로드
 시작하기에 앞서 [GitHub](https://github.com/gfsusan/NaverAPIExample)에서 스타터 프로젝트를 다운로드하여 각 단계를 따라가시면 되겠습니다!
-프로젝트를 처음부터 만드시고 싶으신 분들은 아래 사진과 같이 UI를 구성해주시면 되겠습니다. 
+프로젝트를 처음부터 만드시고 싶으신 분들은 아래 사진과 같이 UI를 구성해주시면 되겠습니다. 프로젝트를 만드실 때 애플리케이션 이름과 애플리케이션 Bundle ID를 기억해 두었다가 오픈API 신청 시 기입하시기 바랍니다. 
 ![Application UI](/tb000_media/0-2.png)
 ### STEP 1. 네이버 오픈 API
 #### 애플리케이션 등록
@@ -24,6 +24,28 @@
 #### 클라이언트 아이디와 클라이언트 시크릿
 애플리케이션 등록을 마치고 나면, [내 애플리케이션](https://developers.naver.com/apps/#/list) 항목 아래 등록한 애플리케이션의 목록이 나타납니다. 자신의 애플리케이션명을 클릭하면, 애플리케이션 정보가 나타나며, 자신의 **클라이언트 아이디**와 **클라이언트 시크릿**을 확인할 수 있습니다. 
 ![Check CliendID and ClientSecret](/tb000_media/1-2.png)
+
+#### 코드
+먼저, [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)를 만들어 Movie 클래스를 만들어 줍니다. 
+``` Swift
+import Foundation
+import UIKit
+
+class Movie {
+    var title:String?
+    var link:String?
+    var imageURL:String?
+    var image:UIImage?
+    var pubDate:String?
+    var director:String?
+    var actors:String?
+    var userRating:String?
+    
+    init() {
+        
+    }
+}
+```
 
 ### STEP 2. 비동기 작업
 <script src="https://gist.github.com/gfsusan/05b778b113610d8dc62982ea3b2ab296.js"></script>
