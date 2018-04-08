@@ -23,8 +23,11 @@ class Movie {
         
     }
     
-    func getCoverImage(withURL imageURL: String) -> UIImage? {
-        if let url = URL(string: imageURL) {
+    func getPosterImage() -> UIImage? {
+        guard imageURL != nil else {
+            return nil
+        }
+        if let url = URL(string: imageURL!) {
             if let imgData = try? Data(contentsOf: url) {
                 if let image = UIImage(data: imgData) {
                     return image

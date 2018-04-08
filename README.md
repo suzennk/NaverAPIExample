@@ -87,26 +87,167 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     var movies:[Movie]      = []           // API를 통해 받아온 결과를 저장할 array
     
     var strXMLData: String?         = ""   // xml 데이터를 저장
-    var currentElement: String?     = ""   // 현재 item의 element를 저장
-    var currentString: String       = ""   // 현재 element의 내용을 저장
+    var currentTag: String?  	    = ""   // 현재 item의 element를 저장
+    var currentElement: String      = ""   // 현재 element의 내용을 저장
     var item: Movie?                = nil  // 검색하여 만들어지는 Movie 객체
 }
 ```
 우선, 다음과 같이 MoviesTableViewController에게 XMLParserDelegate 프로토콜을 적용합니다. 
 다음으로 네이버 개발자 센터에서 발급받은 **클라이언트 아이디**와 **클라이언트 시크릿**을 변수에 저장합니다. 
 ![Xml Data Example](/tb000_media/1-3.png)
-**strXMLData**에는 https://openapi.naver.com에 요청한 쿼리에 대한 응답인 xml 데이터가 저장됩니다. xml 데이터는 위와 같은 형식으로 이루어져 있습니다. 우리가 주의 깊게 볼 부분은 <item> 태그로 둘러싸여 있는 부분입니다. **title**, **link**, **subtitle**, **pubDate**, **director**, **actor**, **userRating** 등을 **element**라고 부르며, 각 element는 <title>과 같이 꺽쇄로 둘러싸여 있습니다. 이제 이 데이터를 Parse(분석, 또는 쪼갬)하여 Movie객체를 만들 것입니다. 따라서 currentElement는 현재 element를 알려주는 변수이고, currentString은 현재 element에 해당하는 데이터를 저장하게 될 변수입니다. **item**은 Movie의 객체로, 한 개의 item을 Parsing에 성공하면 하나의 객체가 완성되는 것입니다.
+**strXMLData**에는 https://openapi.naver.com에 요청한 쿼리에 대한 응답인 xml 데이터가 저장됩니다. xml 데이터는 위와 같은 형식으로 이루어져 있습니다. 우리가 주의 깊게 볼 부분은 <item> 태그로 둘러싸여 있는 부분입니다. **title**, **link**, **subtitle**, **pubDate**, **director**, **actor**, **userRating** 등에 해당하는 내용을 **element**라고 부르며, 각 element는 <title></title>과 같이 **태그**로 둘러싸여 있습니다. 이제 이 데이터를 Parse(분석, 또는 쪼갬)하여 Movie객체를 만들 것입니다. 따라서 currentTag는 현재 tag를 알려주는 변수이고, currentElement은 현재 element에 해당하는 데이터를 저장하게 될 변수입니다. **item**은 Movie의 객체로, 한 개의 item을 Parsing에 성공하면 하나의 객체가 완성되는 것입니다.
 
 ``` Swift
+    func searchMovies() {
+        // movies 초기화
+        movies = []
+        
+        // queryText가 없으면 return
+        guard let query = queryText else {
+            return
+        }
+        
+        let urlString = "https://openapi.naver.com/v1/search/movie.xml?query=" + query
+        let urlWithPercentEscapes = urlString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
+        let url = URL(string: urlWithPercentEscapes!)
+        
+        var request = URLRequest(url: url!)
+        request.addValue("application/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(clientID, forHTTPHeaderField: "X-Naver-Client-Id")
+        request.addValue(clientSecret, forHTTPHeaderField: "X-Naver-Client-Secret")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            // 에러가 있으면 리턴
+            guard error == nil else {
+                print(error)
+                return
+            }
+            
+            // 데이터가 비었으면 출력 후 리턴
+            guard let data = data else {
+                print("Data is empty")
+                return
+            }
+            
+            // 데이터 초기화
+            self.item?.actors = ""
+            self.item?.director = ""
+            self.item?.imageURL = ""
+            self.item?.link = ""
+            self.item?.pubDate = ""
+            self.item?.title = ""
+            self.item?.userRating = ""
+            
+            // Parse the XML
+            let parser = XMLParser(data: Data(data))
+            parser.delegate = self
+            let success:Bool = parser.parse()
+            if success {
+                print(self.strXMLData)
+            } else {
+                print("parse failure!")
+            }
+        }
+        task.resume()
+    }
 
 ```
 **10-12**: 요청 텍스트를 담아 url을 생성합니다. Line 10의 코드를 작성하는 이유는 **query** 문자열 안에 url에 허용되지 않는 문자가 들어있을 때 인코딩을 통해서 HTTP 요청을 보낼 때 문제가 생기지 않도록 하는 것입니다. 
 **14-17**: URL Request를 생성합니다. URL 요청에는 앞서 발급받은 클라이언트 아이디와 클라이언트 시크릿을 함께 전송합니다. 
-**  
+**19-30**: URL Connection Task를 생성합니다. 에러가 있거나, 데이터가 비어있으면 리턴합니다. 그리고 item을 초기화합니다.
+**42-49**: **parse()** 메소드를 호출하여 xml parsing을 시작합니다. parse()메소드를 호출하게 되면, **parserDidStartElement**, **parserFoundCharacters**, **parserDidEndElement** 메소드가 차례로 호출됩니다.
+
+##### parserDidStartElement()
+``` Swift
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        if elementName == "title" || elementName == "link" || elementName == "image" || elementName == "pubDate" || elementName == "director" || elementName == "actor" || elementName == "userRating" {
+            currentElement = ""
+            if elementName == "title" {
+                item = Movie()
+            }
+        }
+    }
+```
+이 함수는 parser가 시작태그를 발견했을 때 호출됩니다. 태그의 내용은 "**elementName**"에 매개변수로 주어집니다. 태그가 title, link, image, pubDate, director, actor, 또는 userRating과 일치하면 currentElement를 초기화하고, 첫 번째 태그인 title과 일치하면 새로운 Movie 객체를 생성합니다. 
+
+
+##### parserFoundCharacers()
+``` Swift
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        currentElement += string
+    }
+```
+이 메소드는 parserDidStartElement() 다음으로 호출됩니다. 시작 태그를 인식한 후 데이터를 읽었음을 의미하는데, 간단하게 **currentElement**에 string의 내용을 덧붙여줍니다.
+
+
+##### parserDidEndElement()
+``` Swift
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        if elementName == "title" {
+            item?.title = currentElement.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+        } else if elementName == "link" {
+            item?.link = currentElement
+        } else if elementName == "image" {
+            item?.imageURL = currentElement
+        } else if elementName == "pubDate" {
+            item?.pubDate = currentElement
+        } else if elementName == "director" {
+            item?.director = currentElement
+            if item?.director != "" {
+                item?.director?.removeLast()
+            }
+        } else if elementName == "actor" {
+            item?.actors = currentElement
+            if item?.actors != "" {
+                item?.actors?.removeLast()
+            }
+        } else if elementName == "userRating" {
+            item?.userRating = currentElement
+            movies.append(self.item!)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+```
+이 메소드는 parserFoundCharaters() 다음으로 호출되며, 끝 태그를 인식했다는 의미입니다. 이 메소드에서는 현재 태그에 해당하는 Movie의 속성을 지정해줍니다. 예를 들어, </title>을 발견했으면 ```item?.title = currentElement```을 해줍니다. Line 3에서 *replacingOccurrences*를 해주는 것은 검색API에서 검색어와 일치하는 문자열을 볼드체 태그로 감싸서 응답을 주기 때문에 태그를 제거해 주는 작업입니다. 10-14와 15-19 같은 경우에는 다수의 인물을 구분하기 위해 "|" 문자를 구별자로 사용하는데, 문자열의 마지막에 불필요한 "|"를 삭제해주는 작업입니다. 20-25에는 item을 movies 배열에 추가해주고, 테이블뷰를 새로고침합니다. **DispatchQueue.main.async**에 대해서는 **STEP 2**에서 다룹니다. 
+
 
 
 ### STEP 2. 비동기 작업
-<script src="https://gist.github.com/gfsusan/05b778b113610d8dc62982ea3b2ab296.js"></script>
+다음은 **비동기 작업**에 대해서 알아봅시다. 
+쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위함입니다. 따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰가 로딩된 이후에 차례로 작업을 해 나가는 것입니다. 
+이번 단계에서는 MoviesTableVC가 로딩된 이후에 차례로 영화의 포스터 이미지를 다운로드 받아 테이블 뷰에 표시하는 기능을 구현할 것입니다. 우선 [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)의 **getPosterImage()**메소드를 구현하고, [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)의 **tableView(cellForRowAt)** 메소드를 살펴봅시다. 
+``` Swift
+
+```
+
+``` Swift
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCellIdentifier", for: indexPath) as! MoviesTableViewCell
+        let movie = movies[indexPath.row]
+        
+        // Async activity
+        // 영화 포스터 이미지 불러오기
+        if let posterImage = movie.image {
+            cell.posterImageView.image = posterImage
+        } else {
+            cell.posterImageView.image = UIImage(named: "noImage")
+            if let posterImageUrl = movie.imageURL {
+                DispatchQueue.main.async(execute: {
+                    movie.image = movie.getPosterImage()
+                    guard let thumbImage = movie.image else {
+                        return
+                    }
+                    cell.posterImageView.image = thumbImage
+                })
+            }
+        }        
+        return cell
+    }
+```
+
+ 
 
 ### STEP 3. UIWebView 사용
 
