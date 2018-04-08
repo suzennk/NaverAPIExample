@@ -27,6 +27,7 @@
 
 #### 코드
 먼저, [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)를 만들어 Movie 클래스를 만들어 줍니다. 
+
 ``` Swift
 import Foundation
 import UIKit
@@ -46,6 +47,54 @@ class Movie {
     }
 }
 ```
+
+모든 속성은 Movie 객체를 생성한 후에 값을 입력해줄 것이기 때문에, Optional로 처리합니다. 
+
+두번째는 [SearchViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/SearchViewController.swift)입니다. 
+``` Swift
+class SearchViewController: UIViewController {
+    @IBAction func searchButtonPressed(_ sender: Any) {
+        if let query = searchTextField.text {
+            performSegue(withIdentifier: "searchSegue", sender: self)
+        }
+    }
+  
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if let moviesVC = segue.destination as? MoviesTableViewController {
+            if let text = searchTextField.text {
+                moviesVC.queryText = text
+            }
+        }
+    }
+ 
+}
+```
+
+먼저 SearchVC에서 MoviesTableVC로 향하는 Segue를 연결해두고, '검색'버튼을 눌렀을 때 Segue를 실행합니다. prepareForSegue 메소드에서는 MoviesTableVC의 **queryText** 필드에 텍스트 필드의 내용을 저장해줌으로써 다음 뷰로 검색어를 넘겨줍니다.
+
+세번째는 [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)입니다. 
+``` Swift
+class MoviesTableViewController: UITableViewController, XMLParserDelegate{
+    let clientID        = "huN1_ueBcLHV9AnTNwpi"    // ClientID
+    let clientSecret    = "kb3OGCZ9rC"              // ClientSecret
+    
+    var queryText:String?                  // SearchVC에서 받아 오는 검색어
+    var movies:[Movie]      = []           // API를 통해 받아온 결과를 저장할 array
+    
+    var strXMLData: String?         = ""   // xml 데이터를 저장
+    var currentElement: String?     = ""   // 현재 item의 element를 저장
+    var currentString: String       = ""   // 현재 element의 내용을 저장
+    var item: Movie?                = nil  // 검색하여 만들어지는 Movie 객체
+}
+```
+우선, 다음과 같이 MoviesTableViewController에게 XMLParserDelegate 프로토콜을 적용합니다. 
+다음으로 네이버 개발자 센터에서 발급받은 **클라이언트 아이디**와 **클라이언트 시크릿**을 변수에 저장합니다. 
+
+
+
 
 ### STEP 2. 비동기 작업
 <script src="https://gist.github.com/gfsusan/05b778b113610d8dc62982ea3b2ab296.js"></script>
