@@ -264,5 +264,51 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
  
 
 ### STEP 3. UIWebView 사용
+이제 셀을 터치했을 때 영화의 세부정보를 볼 수 있는 뷰를 구성할 것입니다. 이 뷰는 웹 뷰를 포함하고 있으며, 뒤로 가기, 앞으로가기, 새로고침 버튼을 구현할 것입니다. 우선 MoviesTableVCa에서 MoviesDetailVC로 넘어가는 Segue를 구성해줍니다. 
+
+``` Swift
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let movieDetailVC = segue.destination as? MovieDetailViewController {
+            if let index = tableView.indexPathForSelectedRow?.row {
+                movieDetailVC.urlString = movies[index].link
+            }
+        }
+    }
+```
+``` Swift
+class MovieDetailViewController: UIViewController {
+    
+    var urlString:String?
+    
+    @IBOutlet weak var webView: UIWebView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let urlStr = urlString {
+            let url = URL (string: urlStr);
+            let request = URLRequest(url: url!);
+            webView.loadRequest(request);
+        }
+    }
+
+    @IBAction func backButtonPressed(_ sender: Any) {
+        if webView.canGoBack {
+            webView.goBack()
+        }
+    }
+    @IBAction func forwardButtonPressed(_ sender: Any) {
+        if webView.canGoForward {
+            webView.goForward()
+        }
+    }
+    @IBAction func reloadButtonPressed(_ sender: Any) {
+        webView.reload()
+    }
+}
+```
+**7-14**: **viewDidLoad()**에서 URL을 생성하여 URL 요청을 생성합니다. 그리고 웹뷰에 요청에 대한 응답을 나타냅니다.
+**16-20**: 뒤로가기 버튼 액션. 뒤로 갈 페이지가 존재하면 해당 페이지로 이동한다.
+**21-25**: 앞으로가기 버튼 액션. 앞으로 갈 페이지가 존재하면 해당 페이지로 이동한다.
+**26-28**: 새로고침 버튼 액션. 페이지를 새로고침한다.
 
 
