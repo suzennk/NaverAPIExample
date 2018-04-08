@@ -50,8 +50,8 @@ class Movie {
 }
 ```
 
-모든 속성은 Movie 객체를 생성한 후에 값을 입력해줄 것이기 때문에, Optional로 처리합니다. 
-
+모든 속성은 Movie 객체를 생성한 후에 값을 입력해줄 것이기 때문에, Optional로 처리합니다.   
+  
 두번째는 [SearchViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/SearchViewController.swift)입니다. 
 ``` Swift
 class SearchViewController: UIViewController {
@@ -75,8 +75,8 @@ class SearchViewController: UIViewController {
 }
 ```
 
-먼저 SearchVC에서 MoviesTableVC로 향하는 Segue를 연결해두고, '검색'버튼을 눌렀을 때 Segue를 실행합니다. prepareForSegue 메소드에서는 MoviesTableVC의 **queryText** 필드에 텍스트 필드의 내용을 저장해줌으로써 다음 뷰로 검색어를 넘겨줍니다.
-
+먼저 SearchVC에서 MoviesTableVC로 향하는 Segue를 연결해두고, '검색'버튼을 눌렀을 때 Segue를 실행합니다. prepareForSegue 메소드에서는 MoviesTableVC의 **queryText** 필드에 텍스트 필드의 내용을 저장해줌으로써 다음 뷰로 검색어를 넘겨줍니다.  
+  
 세번째는 [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)입니다. 
 ``` Swift
 class MoviesTableViewController: UITableViewController, XMLParserDelegate{
@@ -152,11 +152,11 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     }
 
 ```
-**10-12**: 요청 텍스트를 담아 url을 생성합니다. Line 10의 코드를 작성하는 이유는 **query** 문자열 안에 url에 허용되지 않는 문자가 들어있을 때 인코딩을 통해서 HTTP 요청을 보낼 때 문제가 생기지 않도록 하는 것입니다. 
-**14-17**: URL Request를 생성합니다. URL 요청에는 앞서 발급받은 클라이언트 아이디와 클라이언트 시크릿을 함께 전송합니다. 
-**19-30**: URL Connection Task를 생성합니다. 에러가 있거나, 데이터가 비어있으면 리턴합니다. 그리고 item을 초기화합니다.
-**42-49**: **parse()** 메소드를 호출하여 xml parsing을 시작합니다. parse()메소드를 호출하게 되면, **parserDidStartElement**, **parserFoundCharacters**, **parserDidEndElement** 메소드가 차례로 호출됩니다.
-
+**10-12**: 요청 텍스트를 담아 url을 생성합니다. Line 10의 코드를 작성하는 이유는 **query** 문자열 안에 url에 허용되지 않는 문자가 들어있을 때 인코딩을 통해서 HTTP 요청을 보낼 때 문제가 생기지 않도록 하는 것입니다.   
+**14-17**: URL Request를 생성합니다. URL 요청에는 앞서 발급받은 클라이언트 아이디와 클라이언트 시크릿을 함께 전송합니다.  
+**19-30**: URL Connection Task를 생성합니다. 에러가 있거나, 데이터가 비어있으면 리턴합니다. 그리고 item을 초기화합니다.  
+**42-49**: **parse()** 메소드를 호출하여 xml parsing을 시작합니다. parse()메소드를 호출하게 되면, **parserDidStartElement**, **parserFoundCharacters**, **parserDidEndElement** 메소드가 차례로 호출됩니다.  
+  
 ##### parserDidStartElement()
 ``` Swift
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
@@ -216,7 +216,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
 
 ### STEP 2. 비동기 작업
 다음은 **비동기 작업**에 대해서 알아봅시다. 
-쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위함입니다. 따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰가 로딩된 이후에 차례로 작업을 해 나가는 것입니다. 
+쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위함입니다. 따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰가 로딩된 이후에 차례로 작업을 해 나가는 것입니다.   
 이번 단계에서는 MoviesTableVC가 로딩된 이후에 차례로 영화의 포스터 이미지를 다운로드 받아 테이블 뷰에 표시하는 기능을 구현할 것입니다. 우선 [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)의 **getPosterImage()**메소드를 구현하고, [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)의 **tableView(cellForRowAt)** 메소드를 살펴봅시다. 
 ``` Swift
     func getPosterImage() {
@@ -259,7 +259,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         return cell
     }
 ```
-**9-10**: image가 이미 존재하면 즉시 이미지를 cell에 나타냅니다.
+**9-10**: image가 이미 존재하면 즉시 이미지를 cell에 나타냅니다.  
 **11-20**: 이미지가 없으면, 우선 디폴트 이미지를 cell에 먼저 나타내고 비동기 작업 큐에 이미지 다운로드 작업을 넣어둔 다음, 이미지 다운로드 작업이 끝나면 포스터 이미지를 cell에 나타냅니다.    
  
 
@@ -306,9 +306,9 @@ class MovieDetailViewController: UIViewController {
     }
 }
 ```
-**7-14**: **viewDidLoad()**에서 URL을 생성하여 URL 요청을 생성합니다. 그리고 웹뷰에 요청에 대한 응답을 나타냅니다.
-**16-20**: 뒤로가기 버튼 액션. 뒤로 갈 페이지가 존재하면 해당 페이지로 이동한다.
-**21-25**: 앞으로가기 버튼 액션. 앞으로 갈 페이지가 존재하면 해당 페이지로 이동한다.
-**26-28**: 새로고침 버튼 액션. 페이지를 새로고침한다.
-
+**7-14**: **viewDidLoad()**에서 URL을 생성하여 URL 요청을 생성합니다. 그리고 웹뷰에 요청에 대한 응답을 나타냅니다.  
+**16-20**: 뒤로가기 버튼 액션. 뒤로 갈 페이지가 존재하면 해당 페이지로 이동한다.  
+**21-25**: 앞으로가기 버튼 액션. 앞으로 갈 페이지가 존재하면 해당 페이지로 이동한다.  
+**26-28**: 새로고침 버튼 액션. 페이지를 새로고침한다.  
+  
 
