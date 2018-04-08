@@ -82,7 +82,6 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
             parser.delegate = self
             let success:Bool = parser.parse()
             if success {
-                print("parse success!")
                 print(self.strXMLData)
             } else {
                 print("parse failure!")
@@ -115,10 +114,14 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
             item?.pubDate = currentString
         } else if elementName == "director" {
             item?.director = currentString
-            item?.director?.removeLast()
+            if item?.director != "" {
+                item?.director?.removeLast()
+            }
         } else if elementName == "actor" {
             item?.actors = currentString
-            item?.actors?.removeLast()
+            if item?.actors != "" {
+                item?.actors?.removeLast()
+            }
         } else if elementName == "userRating" {
             item?.userRating = currentString
             movies.append(self.item!)
@@ -145,10 +148,30 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
             return cell
         }
         
+        // 제목 및 개봉년도 레이블
         cell.titleANdYearLabel.text = "\(title)(\(pubDate))"
-        cell.userRatingLabel.text = "\(userRating)"
-        cell.directorLabel.text = "\(director)"
-        cell.actorsLabel.text = "\(actor)"
+        
+        // 평점 레이블
+        if userRating == "0.00" {
+            cell.userRatingLabel.text = "정보 없음"
+        } else {
+            cell.userRatingLabel.text = "\(userRating)"
+        }
+        
+        // 감독 레이블
+        if director == "" {
+            cell.directorLabel.text = "정보 없음"
+        } else {
+            cell.directorLabel.text = "\(director)"
+        }
+        
+        // 출연 배우 레이블
+        if actor == "" {
+            cell.actorsLabel.text = "정보 없음"
+        } else {
+            cell.actorsLabel.text = "\(actor)"
+        }
+        
         
         // Async activity
         // 영화 포스터 이미지 불러오기

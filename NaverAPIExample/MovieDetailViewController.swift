@@ -14,6 +14,16 @@ class MovieDetailViewController: UIViewController {
     
     @IBOutlet weak var webView: UIWebView!
     
+    @IBAction func backButtonPressed(_ sender: Any) {
+        if webView.canGoBack {
+            webView.goBack()
+        }
+    }
+    @IBAction func forwardButtonPressed(_ sender: Any) {
+        if webView.canGoForward {
+            webView.goForward()
+        }
+    }
     @IBAction func reloadButtonPressed(_ sender: Any) {
         webView.reload()
     }

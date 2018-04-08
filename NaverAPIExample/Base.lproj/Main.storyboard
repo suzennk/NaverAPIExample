@@ -239,12 +239,28 @@
                             </webView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Uq-3w-Ri2">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="8OK-sK-YlU"/>
+                                </constraints>
                                 <items>
+                                    <barButtonItem title="Back" image="backButton" id="Gzr-dA-fvo">
+                                        <connections>
+                                            <action selector="backButtonPressed:" destination="MNT-9k-H70" id="WFX-KX-aal"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="as8-zb-vMJ"/>
+                                    <barButtonItem title="Item" image="forwardButton" id="9rB-wK-Cey">
+                                        <connections>
+                                            <action selector="forwardButtonPressed:" destination="MNT-9k-H70" id="4Qg-UA-He6"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="8lR-bq-emL"/>
                                     <barButtonItem systemItem="refresh" id="mGX-FZ-CJV">
                                         <connections>
                                             <action selector="reloadButtonPressed:" destination="MNT-9k-H70" id="AHw-co-i5z"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="3dv-Mo-8ck"/>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -288,6 +304,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="backButton" width="24" height="24"/>
+        <image name="forwardButton" width="24" height="24"/>
         <image name="noImage" width="275" height="275"/>
     </resources>
 </document>
