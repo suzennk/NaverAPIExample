@@ -22,7 +22,7 @@
 
 #### 클라이언트 아이디와 클라이언트 시크릿
 애플리케이션 등록을 마치고 나면, [내 애플리케이션](https://developers.naver.com/apps/#/list) 항목 아래 등록한 애플리케이션의 목록이 나타납니다. 자신의 애플리케이션명을 클릭하면, 애플리케이션 정보가 나타나며, 자신의 **클라이언트 아이디**와 **클라이언트 시크릿**을 확인할 수 있습니다. 
-![Check CliendID and ClientSecret)(/tb000_media/1-2.png)
+![Check CliendID and ClientSecret](/tb000_media/1-2.png)
 
 ### STEP 2. 비동기 작업
 <script src="https://gist.github.com/gfsusan/05b778b113610d8dc62982ea3b2ab296.js"></script>
