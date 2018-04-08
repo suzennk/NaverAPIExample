@@ -11,8 +11,8 @@
 
 ## 시작하기
 ### STEP 0. 스타터 프로젝트 다운로드
-시작하기에 앞서 [GitHub](https://github.com/gfsusan/NaverAPIExample)에서 스타터 프로젝트를 다운로드하여 각 단계를 따라가시면 되겠습니다!
-프로젝트를 처음부터 만드시고 싶으신 분들은 아래 사진과 같이 UI를 구성해주시면 되겠습니다. 프로젝트를 만드실 때 애플리케이션 이름과 애플리케이션 Bundle ID를 기억해 두었다가 오픈API 신청 시 기입하시기 바랍니다. 
+시작하기에 앞서 [GitHub](https://github.com/gfsusan/NaverAPIExample)에서 스타터 프로젝트를 다운로드하여 각 단계를 따라가시면 되겠습니다!  
+프로젝트를 처음부터 만드시고 싶으신 분들은 아래 사진과 같이 UI를 구성해주시면 되겠습니다. 프로젝트를 만드실 때 **애플리케이션 이름**과 **애플리케이션 Bundle ID**를 기억해 두었다가 오픈API 신청 시 기입하시기 바랍니다. 
 ![Application UI](/tb000_media/0-2.png)
 
 ### STEP 1. 네이버 오픈 API
@@ -21,7 +21,7 @@
 네이버 오픈 API를 사용하기 위해서는 네이버로부터 **클라이언트 아이디**와 **클라이언트 시크릿**을 발급받아야 합니다. 이는 네이버 오픈API 사용자가 인증된 사용자인지 확인하는 고유한 아이디와 비밀번호로, 네이버 개발자센터의 **애플리케이션 등록** 메뉴에서 [애플리케이션을 등록](https://developers.naver.com/apps/#/register)하면 발급되는 값입니다. 
 
 ![Issue ClientID and ClientSecret](/tb000_media/1-1.png)
-위와 같이 **애플리케이션 이름**을 프로젝트명과 동일하게 작성한 다음, **사용 API**를 **검색**으로 설정합니다. 마지막으로 **비로그인 오픈API 서비스 환경**에서 **iOS 설정**을 추가한 다음, Xcode 프로젝트 생성 시 애플리케이션의 Bundle ID를 정확하게 입력합니다. 
+위와 같이 **애플리케이션 이름**을 프로젝트명과 동일하게 작성한 다음, **사용 API**를 **검색**으로 설정합니다. 마지막으로 **비로그인 오픈API 서비스 환경**에서 **iOS 설정**을 추가한 다음, Xcode 프로젝트 생성 시 **애플리케이션의 Bundle ID**를 정확하게 입력합니다. 
 
 #### 클라이언트 아이디와 클라이언트 시크릿
 애플리케이션 등록을 마치고 나면, [내 애플리케이션](https://developers.naver.com/apps/#/list) 항목 아래 등록한 애플리케이션의 목록이 나타납니다. 자신의 애플리케이션명을 클릭하면, 애플리케이션 정보가 나타나며, 자신의 **클라이언트 아이디**와 **클라이언트 시크릿**을 확인할 수 있습니다. 
@@ -75,7 +75,7 @@ class SearchViewController: UIViewController {
 }
 ```
 
-먼저 SearchVC에서 MoviesTableVC로 향하는 Segue를 연결해두고, '검색'버튼을 눌렀을 때 Segue를 실행합니다. prepareForSegue 메소드에서는 MoviesTableVC의 **queryText** 필드에 텍스트 필드의 내용을 저장해줌으로써 다음 뷰로 검색어를 넘겨줍니다.  
+먼저 SearchVC에서 MoviesTableVC로 향하는 **Segue**를 연결해두고, '검색'버튼을 눌렀을 때 Segue를 실행합니다. prepareForSegue 메소드에서는 MoviesTableVC의 **queryText** 필드에 텍스트 필드의 내용을 저장해줌으로써 다음 뷰로 검색어를 넘겨줍니다.  
   
 세번째는 [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)입니다. 
 ``` Swift
@@ -92,10 +92,13 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     var item: Movie?                = nil  // 검색하여 만들어지는 Movie 객체
 }
 ```
-우선, 다음과 같이 MoviesTableViewController에게 XMLParserDelegate 프로토콜을 적용합니다. 
+우선, 위와  같이 MoviesTableViewController에게 **XMLParserDelegate** 프로토콜을 적용합니다.  
 다음으로 네이버 개발자 센터에서 발급받은 **클라이언트 아이디**와 **클라이언트 시크릿**을 변수에 저장합니다. 
+    
+
+##### XML 데이터의 예
 ![Xml Data Example](/tb000_media/1-3.png)
-**strXMLData**에는 https://openapi.naver.com에 요청한 쿼리에 대한 응답인 xml 데이터가 저장됩니다. xml 데이터는 위와 같은 형식으로 이루어져 있습니다. 우리가 주의 깊게 볼 부분은 <item> 태그로 둘러싸여 있는 부분입니다. **title**, **link**, **subtitle**, **pubDate**, **director**, **actor**, **userRating** 등에 해당하는 내용을 **element**라고 부르며, 각 element는 <title></title>과 같이 **태그**로 둘러싸여 있습니다. 이제 이 데이터를 Parse(분석, 또는 쪼갬)하여 Movie객체를 만들 것입니다. 따라서 currentTag는 현재 tag를 알려주는 변수이고, currentElement은 현재 element에 해당하는 데이터를 저장하게 될 변수입니다. **item**은 Movie의 객체로, 한 개의 item을 Parsing에 성공하면 하나의 객체가 완성되는 것입니다.
+**strXMLData**에는 https://openapi.naver.com에 요청한 쿼리에 대한 응답인 xml 데이터가 저장됩니다. **xml 데이터**는 위와 같은 형식으로 이루어져 있습니다. 우리가 주의 깊게 볼 부분은 <item> 태그로 둘러싸여 있는 부분입니다. title, link, subtitle, pubDate, director, actor, userRating 등에 해당하는 내용을 **element**라고 부르며, 각 element는 <title></title>과 같이 **태그**로 둘러싸여 있습니다. 이제 이 데이터를 Parse(분석, 또는 쪼갬)하여 Movie객체를 생성할 것입니다. **currentTag**는 현재 tag를 알려주는 변수이고, **currentElement**은 현재 element에 해당하는 데이터를 저장하게 될 변수입니다. **item**은 Movie의 객체로, 한 개의 item을 Parsing에 성공하면 하나의 객체가 완성되는 것입니다.  
 
 ``` Swift
     func searchMovies() {
@@ -168,7 +171,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         }
     }
 ```
-이 함수는 parser가 시작태그를 발견했을 때 호출됩니다. 태그의 내용은 "**elementName**"에 매개변수로 주어집니다. 태그가 title, link, image, pubDate, director, actor, 또는 userRating과 일치하면 currentElement를 초기화하고, 첫 번째 태그인 title과 일치하면 새로운 Movie 객체를 생성합니다. 
+이 메소드는 parser가 시작태그를 발견했을 때 호출됩니다. 태그의 내용은 "**elementName**"에 매개변수로 주어집니다. 태그가 title, link, image, pubDate, director, actor, 또는 userRating과 일치하면 currentElement를 초기화하고, 첫 번째 태그인 title과 일치하면 새로운 Movie 객체를 생성합니다. 
 
 
 ##### parserFoundCharacers()
@@ -177,7 +180,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         currentElement += string
     }
 ```
-이 메소드는 parserDidStartElement() 다음으로 호출됩니다. 시작 태그를 인식한 후 데이터를 읽었음을 의미하는데, 간단하게 **currentElement**에 string의 내용을 덧붙여줍니다.
+이 메소드는 **parserDidStartElement**() 다음으로 호출됩니다. 시작 태그를 인식한 후 데이터를 읽었음을 의미하는데, 간단하게 **currentElement**에 string의 내용을 덧붙여줍니다.
 
 
 ##### parserDidEndElement()
@@ -210,14 +213,18 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         }
     }
 ```
-이 메소드는 parserFoundCharaters() 다음으로 호출되며, 끝 태그를 인식했다는 의미입니다. 이 메소드에서는 현재 태그에 해당하는 Movie의 속성을 지정해줍니다. 예를 들어, </title>을 발견했으면 ```item?.title = currentElement```을 해줍니다. Line 3에서 *replacingOccurrences*를 해주는 것은 검색API에서 검색어와 일치하는 문자열을 볼드체 태그로 감싸서 응답을 주기 때문에 태그를 제거해 주는 작업입니다. 10-14와 15-19 같은 경우에는 다수의 인물을 구분하기 위해 "|" 문자를 구별자로 사용하는데, 문자열의 마지막에 불필요한 "|"를 삭제해주는 작업입니다. 20-25에는 item을 movies 배열에 추가해주고, 테이블뷰를 새로고침합니다. **DispatchQueue.main.async**에 대해서는 **STEP 2**에서 다룹니다. 
+이 메소드는 **parserFoundCharaters**() 다음으로 호출되며, 끝 태그를 인식했다는 의미입니다. 이 메소드에서는 현재 태그에 해당하는 Movie의 속성을 지정해줍니다. 예를 들어, </title>을 발견했으면 ```item?.title = currentElement```을 해줍니다. Line 3에서 *replacingOccurrences*를 해주는 것은 검색API에서 검색어와 일치하는 문자열을 볼드체 태그로 감싸서 응답을 주기 때문에 태그를 제거해 주는 작업입니다.  
+**10-14**와 **15-19** 같은 경우에는 다수의 인물을 구분하기 위해 "|" 문자를 구별자로 사용하는데, 문자열의 마지막에 불필요한 "|"를 삭제해주는 작업입니다.   
+**20-25**에는 item을 movies 배열에 추가해주고, 테이블뷰를 새로고침합니다. **DispatchQueue.main.async**에 대해서는 **STEP 2**에서 다룹니다. 
 
 
 
 ### STEP 2. 비동기 작업
 다음은 **비동기 작업**에 대해서 알아봅시다. 
-쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위함입니다. 따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰가 로딩된 이후에 차례로 작업을 해 나가는 것입니다.   
-이번 단계에서는 MoviesTableVC가 로딩된 이후에 차례로 영화의 포스터 이미지를 다운로드 받아 테이블 뷰에 표시하는 기능을 구현할 것입니다. 우선 [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)의 **getPosterImage()**메소드를 구현하고, [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)의 **tableView(cellForRowAt)** 메소드를 살펴봅시다. 
+쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위해서, 기본 이미지를 먼저 띄워 놓고, 백그라운드에서 이미지 다운로드가 완료되는 즉시 이미지를 뷰에 나타내는 것입니다.  따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰가 로딩된 이후에 차례로 작업을 완료해 나가는 것입니다.   
+이번 단계에서는 MoviesTableVC가 로딩된 이후에 차례로 영화의 포스터 이미지를 다운로드 받아 테이블 뷰에 표시하는 기능을 구현할 것입니다. 우선 [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)의 **getPosterImage**() 메소드를 구현하고, [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)의 **tableView(cellForRowAt)** 메소드를 살펴봅시다. 
+
+##### Model.swift
 ``` Swift
     func getPosterImage() {
         guard imageURL != nil else {
@@ -233,8 +240,10 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         return
     }
 ```
-여기서는 movie 객체의 imageURL이 존재하는지 먼저 확인한 다음, imageURL을 가지고 URL 객체를 생성하여 이를 가지고 이미지 데이터를 불러옵니다. 이미지 데이터를 사용해서 UIImage를 생성하고, self의 image에 저장합니다. 
+여기서는 movie 객체의 imageURL이 존재하는지 먼저 확인한 다음, imageURL을 가지고 URL 객체를 생성하여 이를 가지고 이미지 데이터를 불러옵니다. 이미지 데이터를 사용해서 UIImage를 생성하고, self의 image에 저장합니다.  
+   
 
+##### MoviesTableViewController.swift
 ``` Swift
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "movieCellIdentifier", for: indexPath) as! MoviesTableViewCell
@@ -266,6 +275,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
 ### STEP 3. UIWebView 사용
 이제 셀을 터치했을 때 영화의 세부정보를 볼 수 있는 뷰를 구성할 것입니다. 이 뷰는 웹 뷰를 포함하고 있으며, 뒤로 가기, 앞으로가기, 새로고침 버튼을 구현할 것입니다. 우선 MoviesTableVCa에서 MoviesDetailVC로 넘어가는 Segue를 구성해줍니다. 
 
+##### MoviesTableViewController.swift
 ``` Swift
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let movieDetailVC = segue.destination as? MovieDetailViewController {
@@ -275,6 +285,8 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         }
     }
 ```
+
+##### MovieDetailViewController.swift
 ``` Swift
 class MovieDetailViewController: UIViewController {
     
