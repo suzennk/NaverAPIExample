@@ -14,6 +14,16 @@ class MovieDetailViewController: UIViewController {
     
     @IBOutlet weak var webView: UIWebView!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let urlStr = urlString {
+            let url = URL (string: urlStr);
+            let request = URLRequest(url: url!);
+            webView.loadRequest(request);
+        }
+        // Do any additional setup after loading the view.
+    }
+
     @IBAction func backButtonPressed(_ sender: Any) {
         if webView.canGoBack {
             webView.goBack()
@@ -28,16 +38,6 @@ class MovieDetailViewController: UIViewController {
         webView.reload()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if let urlStr = urlString {
-            let url = URL (string: urlStr);
-            let request = URLRequest(url: url!);
-            webView.loadRequest(request);
-        }
-        // Do any additional setup after loading the view.
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
