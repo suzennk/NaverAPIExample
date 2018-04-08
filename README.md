@@ -14,11 +14,15 @@
 시작하기에 앞서 [GitHub](https://github.com/gfsusan/NaverAPIExample)에서 스타터 프로젝트를 다운로드하여 각 단계를 따라가시면 되겠습니다!
 
 ### STEP 1. 네이버 오픈 API
+#### 애플리케이션 등록
 네이버 오픈 API를 사용하기 위해서는 네이버로부터 **클라이언트 아이디**와 **클라이언트 시크릿**을 발급받아야 합니다. 이는 네이버 오픈API 사용자가 인증된 사용자인지 확인하는 고유한 아이디와 비밀번호로, 네이버 개발자센터의 **애플리케이션 등록** 메뉴에서 [애플리케이션을 등록](https://developers.naver.com/apps/#/register)하면 발급되는 값입니다. 
 
 ![Issue ClientID and ClientSecret](/tb000_media/1-1.png)
 위와 같이 **애플리케이션 이름**을 프로젝트명과 동일하게 작성한 다음, **사용 API**를 **검색**으로 설정합니다. 마지막으로 **비로그인 오픈API 서비스 환경**에서 **iOS 설정**을 추가한 다음, Xcode 프로젝트 생성 시 애플리케이션의 Bundle ID를 정확하게 입력합니다. 
- 
+
+#### 클라이언트 아이디와 클라이언트 시크릿
+애플리케이션 등록을 마치고 나면, [내 애플리케이션](https://developers.naver.com/apps/#/list) 항목 아래 등록한 애플리케이션의 목록이 나타납니다. 자신의 애플리케이션명을 클릭하면, 애플리케이션 정보가 나타나며, 자신의 **클라이언트 아이디**와 **클라이언트 시크릿**을 확인할 수 있습니다. 
+![Check CliendID and ClientSecret)(/tb000_media/1-2.png)
 
 ### STEP 2. 비동기 작업
 <script src="https://gist.github.com/gfsusan/05b778b113610d8dc62982ea3b2ab296.js"></script>
