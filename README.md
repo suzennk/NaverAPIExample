@@ -84,7 +84,7 @@ class SearchViewController: UIViewController {
 }
 ```
 
-먼저 SearchVC에서 MoviesTableVC로 향하는 **Segue**를 연결해두고, '검색'버튼을 눌렀을 때 Segue를 실행합니다. prepareForSegue 메소드에서는 MoviesTableVC의 **queryText** 필드에 텍스트 필드의 내용을 저장해줌으로써 다음 뷰로 검색어를 넘겨줍니다.  
+먼저 `SearchVC`에서 `MoviesTableVC`로 향하는 `segue`를 연결해두고, '검색'버튼을 눌렀을 때 `segue`를 실행합니다. `prepareForSegue()` 메소드에서는 `MoviesTableVC`의 `queryText` 필드에 텍스트 필드의 내용을 저장해줌으로써 다음 뷰로 검색어를 넘겨줍니다.  
    
 
 세번째는 [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)입니다. 
@@ -170,7 +170,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
 **10-12**: 요청 텍스트를 담아 `url`을 생성합니다. Line 10의 코드를 작성하는 이유는 `query` 문자열 안에 url에 허용되지 않는 문자가 들어있을 때 인코딩을 통해서 HTTP 요청을 보낼 때 문제가 생기지 않도록 하는 것입니다.   
 **14-17**: `URLRequest`를 생성합니다. URL 요청에는 앞서 발급받은 클라이언트 아이디와 클라이언트 시크릿을 함께 전송합니다.  
 **19-30**: URL Connection `Task`를 생성합니다. 에러가 있거나, 데이터가 비어있으면 리턴합니다. 그리고 `item`을 초기화합니다.  
-**42-49**: **parse()** 메소드를 호출하여 xml parsing을 시작합니다. parse()메소드를 호출하게 되면, `parserDidStartElement()`, `parserFoundCharacters()`, `parserDidEndElement()` 메소드가 차례로 호출됩니다.  
+**42-49**: `parse()` 메소드를 호출하여 xml parsing을 시작합니다. `parse()`메소드를 호출하게 되면, `parserDidStartElement()`, `parserFoundCharacters()`, `parserDidEndElement()` 메소드가 차례로 호출됩니다.  
   
   
 
@@ -185,7 +185,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         }
     }
 ```
-이 메소드는 parser가 시작태그를 발견했을 때 호출됩니다. 태그의 내용은 "**elementName**"에 매개변수로 주어집니다. 태그가 title, link, image, pubDate, director, actor, 또는 userRating과 일치하면 currentElement를 초기화하고, 첫 번째 태그인 title과 일치하면 새로운 Movie 객체를 생성합니다. 
+이 메소드는 parser가 시작태그를 발견했을 때 호출됩니다. 태그는 `elementName`에 매개변수로 주어집니다. 태그가 title, link, image, pubDate, director, actor, 또는 userRating과 일치하면 `currentElement`를 초기화하고, 첫 번째 태그인 title과 일치하면 새로운 Movie 객체를 생성합니다. 
   
   
 
@@ -231,13 +231,13 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
 ```
 이 메소드는 `parserFoundCharaters()` 다음으로 호출되며, 끝 태그를 인식했다는 의미입니다. 이 메소드에서는 현재 태그에 해당하는 Movie의 속성을 지정해줍니다. 예를 들어, </title>을 발견했으면 `item?.title = currentElement`을 해줍니다. Line 3에서 *replacingOccurrences*를 해주는 것은 검색API에서 검색어와 일치하는 문자열을 볼드체 태그로 감싸서 응답을 주기 때문에 태그를 제거해 주는 작업입니다.  
 **10-14**와 **15-19** 같은 경우에는 다수의 인물을 구분하기 위해 "|" 문자를 구별자로 사용하는데, 문자열의 마지막에 불필요한 "|"를 삭제해주는 작업입니다.   
-**20-25**에는 item을 movies 배열에 추가해주고, 테이블뷰를 새로고침합니다. **DispatchQueue.main.async**에 대해서는 **STEP 2**에서 다룹니다. 
+**20-25**에는 `item`을 `movies` 배열에 추가해주고, 테이블뷰를 새로고침합니다. `DispatchQueue.main.async`에 대해서는 **STEP 2**에서 다룹니다. 
   
   
   
 ### STEP 2. 비동기 작업
 다음은 **비동기 작업**에 대해서 알아봅시다. 
-쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위해서, 기본 이미지를 먼저 띄워 놓고, 백그라운드에서 이미지 다운로드가 완료되는 즉시 이미지를 뷰에 나타내는 것입니다.  따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰가 로딩된 이후에 차례로 작업을 완료해 나가는 것입니다.   
+쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위해서, 기본 이미지를 먼저 띄워 놓고, 백그라운드에서 이미지 다운로드가 완료되는 즉시 이미지를 뷰에 나타내는 것입니다. 따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰가 로딩된 이후에 차례로 작업을 완료해 나가는 것입니다.   
 이번 단계에서는 MoviesTableVC가 로딩된 이후에 차례로 영화의 포스터 이미지를 다운로드 받아 테이블 뷰에 표시하는 기능을 구현할 것입니다. 우선 [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)의 `getPosterImage()` 메소드를 구현하고, [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)의 `tableView(cellForRowAt)` 메소드를 살펴봅시다. 
   
 
