@@ -12,6 +12,8 @@ import os.log
 class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     @IBOutlet weak var titleNavigationItem: UINavigationItem!
     
+    let posterImageQueue = DispatchQueue(label: "posterImage")
+    
     let clientID        = "huN1_ueBcLHV9AnTNwpi"    // ClientID
     let clientSecret    = "kb3OGCZ9rC"              // ClientSecret
     
@@ -176,12 +178,14 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
             cell.posterImageView.image = posterImage
         } else {
             cell.posterImageView.image = UIImage(named: "noImage")
-            DispatchQueue.main.async(execute: {
+            posterImageQueue.async(execute: {
                 movie.getPosterImage()
                 guard let thumbImage = movie.image else {
                     return
                 }
-                cell.posterImageView.image = thumbImage
+                DispatchQueue.main.async {
+                    cell.posterImageView.image = thumbImage
+                }
             })
         }
         return cell
