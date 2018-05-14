@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Jiy-rH-6eG">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -16,17 +12,17 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SearchViewController" customModule="NaverAPIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="iIA-Iu-cpB">
-                                <rect key="frame" x="87.5" y="229.5" width="200.5" height="109.5"/>
+                                <rect key="frame" x="200" y="195.5" width="200.5" height="109.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="SBo-OK-836">
                                         <rect key="frame" x="29.5" y="0.0" width="141.5" height="49.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영화 검색" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U1B-oZ-UZk">
-                                                <rect key="frame" x="34" y="0.0" width="74" height="24"/>
+                                                <rect key="frame" x="33.5" y="0.0" width="74" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -51,7 +47,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MPM-f2-kOA">
-                                <rect key="frame" x="172" y="359" width="30" height="30"/>
+                                <rect key="frame" x="285" y="325" width="30" height="30"/>
                                 <state key="normal" title="검색"/>
                                 <connections>
                                     <action selector="searchButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8XU-VX-mmJ"/>
@@ -82,19 +78,19 @@
             <objects>
                 <tableViewController id="YME-DK-mv3" customClass="MoviesTableViewController" customModule="NaverAPIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZUz-04-KCT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCellIdentifier" rowHeight="126" id="gX3-4S-Axx" customClass="MoviesTableViewCell" customModule="NaverAPIExample" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="126"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="126"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gX3-4S-Axx" id="Fa3-UW-bgD">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="125.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="125.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bQy-mo-xzS">
-                                            <rect key="frame" x="8" y="8" width="359" height="110"/>
+                                            <rect key="frame" x="8" y="8" width="584" height="110"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noImage" translatesAutoresizingMaskIntoConstraints="NO" id="Oay-ET-cxa">
                                                     <rect key="frame" x="0.0" y="0.0" width="90" height="110"/>
@@ -103,7 +99,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="orJ-06-2qP">
-                                                    <rect key="frame" x="100" y="0.0" width="259" height="110"/>
+                                                    <rect key="frame" x="100" y="0.0" width="484" height="110"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="리틀 포레스트(2018)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="je2-rg-se3" userLabel="영화 제목(제작년도)">
                                                             <rect key="frame" x="0.0" y="0.0" width="146" height="35"/>
@@ -115,7 +111,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="grB-wQ-ZK9">
-                                                            <rect key="frame" x="0.0" y="43.5" width="259" height="66.5"/>
+                                                            <rect key="frame" x="0.0" y="43.5" width="484" height="66.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Y41-lT-Srd" userLabel="Rating Stack View">
                                                                     <rect key="frame" x="0.0" y="0.0" width="68.5" height="20.5"/>
@@ -152,10 +148,10 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ajK-lU-JAo" userLabel="Actors Stack View">
-                                                                    <rect key="frame" x="0.0" y="48.5" width="259" height="18"/>
+                                                                    <rect key="frame" x="0.0" y="48.5" width="484" height="18"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="출연 배우" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWg-60-Gn6">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="56" height="18"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="281" height="18"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="56" id="gEt-qV-Map"/>
                                                                             </constraints>
@@ -164,7 +160,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="김태리|류준열|문소리|진기주" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPI-i9-5h4">
-                                                                            <rect key="frame" x="61" y="0.0" width="198" height="18"/>
+                                                                            <rect key="frame" x="286" y="0.0" width="198" height="18"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="198" id="CDI-gH-uBe"/>
                                                                             </constraints>
@@ -202,7 +198,7 @@
                                     <outlet property="actorsLabel" destination="IPI-i9-5h4" id="HsA-d5-7FT"/>
                                     <outlet property="directorLabel" destination="iJW-Bb-KMI" id="yJp-ki-8sl"/>
                                     <outlet property="posterImageView" destination="Oay-ET-cxa" id="HBR-q0-VaW"/>
-                                    <outlet property="titleANdYearLabel" destination="je2-rg-se3" id="rmd-az-ng2"/>
+                                    <outlet property="titleAndYearLabel" destination="je2-rg-se3" id="rmd-az-ng2"/>
                                     <outlet property="userRatingLabel" destination="ger-II-zsp" id="TDw-vY-x2L"/>
                                     <segue destination="MNT-9k-H70" kind="show" id="4TO-ne-Toj"/>
                                 </connections>
@@ -227,15 +223,15 @@
             <objects>
                 <viewController id="MNT-9k-H70" customClass="MovieDetailViewController" customModule="NaverAPIExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5GC-Xx-y4H">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="slc-5b-yYP">
-                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Uq-3w-Ri2">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="8OK-sK-YlU"/>
                                 </constraints>

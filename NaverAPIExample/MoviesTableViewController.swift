@@ -146,7 +146,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         }
         
         // 제목 및 개봉년도 레이블
-        cell.titleANdYearLabel.text = "\(title)(\(pubDate))"
+        cell.titleAndYearLabel.text = "\(title)(\(pubDate))"
         
         // 평점 레이블
         if userRating == "0.00" {
