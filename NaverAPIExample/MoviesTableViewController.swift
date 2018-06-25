@@ -8,6 +8,7 @@
 
 import UIKit
 import os.log
+import SafariServices
 
 class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     @IBOutlet weak var titleNavigationItem: UINavigationItem!
@@ -191,16 +192,14 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         return cell
     }
 
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let movieDetailVC = segue.destination as? MovieDetailViewController {
-            if let index = tableView.indexPathForSelectedRow?.row {
-                movieDetailVC.urlString = movies[index].link
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let urlString = movies[indexPath.row].link {
+            if let url = URL(string: urlString) {
+                let svc = SFSafariViewController(url: url)
+                self.present(svc, animated: true, completion: nil)
             }
         }
     }
-
-
+    
 }
 
