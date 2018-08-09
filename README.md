@@ -9,7 +9,7 @@ by. Sujin Kim
 ### 예제 애플리케이션 소개
 이번 포스트에서는 **영화 정보 애플리케이션**을 만들 것입니다. 사용자로부터 영화 검색어를 입력받은 후, 네이버 오픈 API 호출을 통해 검색어와 일치하는 영화 정보를 불러와 테이블뷰에 표시합니다. 그리고 원하는 영화를 터치하면 각 영화의 세부 정보를 보여줍니다.
 ![Application Example Image](/tb000_media/0-1.png)
-구현하고자 하는 핵심 기능은 **네이버의 검색 API**를 사용한 영화 검색 기능입니다. 영화 포스터 이미지 다운로드는 **비동기 작업**을 사용해 다운로드 작업을 뒤로 미루고, 포스터 이미지가 모두 다운로드 될 때까지 기다릴 필요 없이 바로 검색 결과를 확인할 수 있도록 테이블 뷰를 구성합니다. 마지막으로, **HTTP Request**를 사용하여 영화의 세부 정보를 보여주는 웹 뷰를 구성합니다.
+구현하고자 하는 핵심 기능은 **네이버의 검색 API**를 사용한 영화 검색 기능입니다. 영화 포스터 이미지 다운로드는 **비동기 작업**을 사용해 다운로드 작업을 뒤로 미루고, 포스터 이미지가 모두 다운로드 될 때까지 기다릴 필요 없이 바로 검색 결과를 확인할 수 있도록 테이블 뷰를 구성합니다. 마지막으로, **HTTP Request**를 사용하여 영화의 세부 정보를 보여주는 사파리 뷰를 구성합니다.
 
 
 
@@ -335,59 +335,23 @@ SAX 타입은 XML 데이터를 순차적으로 읽어나가면서 원하는 요�
 
 
 
-### STEP 3. UIWebView 사용
-이제 셀을 터치했을 때 영화의 세부정보를 볼 수 있는 뷰를 구성할 것입니다. 이 뷰는 웹 뷰를 포함하고 있으며, 뒤로 가기, 앞으로가기, 새로고침 버튼을 구현할 것입니다. 우선 `MoviesTableVC`에서 `MoviesDetailVC`로 넘어가는 `segue`를 구성해줍니다.
-
+### STEP 3. SFSafariViewController 사용
+이제 셀을 터치했을 때 영화의 세부정보를 볼 수 있는 사파리 뷰를 구성할 차례입니다.
 
 ##### MoviesTableViewController.swift
 ``` Swift
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let movieDetailVC = segue.destination as? MovieDetailViewController {
-            if let index = tableView.indexPathForSelectedRow?.row {
-                movieDetailVC.urlString = movies[index].link
-            }
+override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if let urlString = movies[indexPath.row].link {
+        if let url = URL(string: urlString) {
+            let svc = SFSafariViewController(url: url)
+            self.present(svc, animated: true, completion: nil)
         }
-    }
-```
-
-
-##### MovieDetailViewController.swift
-``` Swift
-class MovieDetailViewController: UIViewController {
-
-    var urlString:String?
-
-    @IBOutlet weak var webView: UIWebView!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if let urlStr = urlString {
-            let url = URL (string: urlStr);
-            let request = URLRequest(url: url!);
-            webView.loadRequest(request);
-        }
-    }
-
-    @IBAction func backButtonPressed(_ sender: Any) {
-        if webView.canGoBack {
-            webView.goBack()
-        }
-    }
-    @IBAction func forwardButtonPressed(_ sender: Any) {
-        if webView.canGoForward {
-            webView.goForward()
-        }
-    }
-    @IBAction func reloadButtonPressed(_ sender: Any) {
-        webView.reload()
     }
 }
 ```
-**7-14**: `viewDidLoad()`에서 `URL`을 생성하여 URL 요청을 생성합니다. 그리고 웹뷰에 요청에 대한 응답을 나타냅니다.  
-**16-20**: 뒤로가기 버튼 액션. 뒤로 갈 페이지가 존재하면 해당 페이지로 이동합니다.  
-**21-25**: 앞으로가기 버튼 액션. 앞으로 갈 페이지가 존재하면 해당 페이지로 이동합니다.  
-**26-28**: 새로고침 버튼 액션. 페이지를 새로고침합니다.  
-
+**3**: 해당 인덱스의 `movie` 객체의 urlString에 해당하는 주소를 가지고 `URL` 객체를 생성합니다.
+**4**: `SFSafariViewController` 객체를 생성합니다. 사파리 뷰에서 영화 내용을 띄울 수 있도록 앞서 만든 `URL` 객체를 생성자에 기입합니다.
+**5**: 생성한 사파리 뷰를 Modal로 띄워 줍니다.
 
 
 
