@@ -184,9 +184,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
                 guard let thumbImage = movie.image else {
                     return
                 }
-                DispatchQueue.main.async {
                     cell.posterImageView.image = thumbImage
-                }
             })
         }
         return cell

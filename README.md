@@ -240,7 +240,7 @@ SAX 타입은 XML 데이터를 순차적으로 읽어나가면서 원하는 요�
         currentElement += string
     }
 ```
-이 메소드는 `parserDidStartElement()` 다음으로 호출됩니다. 시작 태그를 인식한 후 데이터를 읽었음을 의미하는데, 간단하게 `currentElement`에 string의 내용을 덧붙여줍니다.
+이 메소드는 `parserDidStartElement()` 다음으로 호출됩니다. 시작 태그를 인식한 후 데이터를 읽었음을 의미하는데, 간단하게 `currentElement`에 `string`의 내용을 덧붙여줍니다.
 
 
 
@@ -276,13 +276,13 @@ SAX 타입은 XML 데이터를 순차적으로 읽어나가면서 원하는 요�
 ```
 이 메소드는 `parserFoundCharaters()` 다음으로 호출되며, 끝 태그를 인식했다는 의미입니다. 이 메소드에서는 현재 태그에 해당하는 Movie의 속성을 지정해줍니다. 예를 들어, </title>을 발견했으면 `item?.title = currentElement`을 해줍니다. Line 3에서 *replacingOccurrences*를 해주는 것은 검색API에서 검색어와 일치하는 문자열을 볼드체 태그로 감싸서 응답을 주기 때문에 태그를 제거해 주는 작업입니다.  
 **10-14**와 **15-19** 같은 경우에는 다수의 인물을 구분하기 위해 "|" 문자를 구별자로 사용하는데, 문자열의 마지막에 불필요한 "|"를 삭제해주는 작업입니다.   
-**20-25**에는 `item`을 `movies` 배열에 추가해주고, 테이블뷰를 새로고침합니다. `DispatchQueue.main.async`에 대해서는 **STEP 2**에서 다룹니다.
+**20-25**에는 `item`을 `movies` 배열에 추가해주고, 테이블뷰를 새로고침합니다. `DispatchQueue.main.async`에 대해서는 **STEP 2** 에서 다룹니다.
 
 
 
 ### STEP 2. 비동기 작업
 다음은 **비동기 작업**에 대해서 알아봅시다.
-쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위해서, 기본 이미지를 먼저 띄워 놓고, 백그라운드에서 이미지 다운로드가 완료되는 즉시 이미지를 뷰에 나타내는 것입니다. 따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰가 로딩된 이후에 차례로 작업을 완료해 나가는 것입니다.   
+쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위해서, 기본 이미지를 먼저 띄워 놓고, 백그라운드에서 이미지 다운로드가 완료되는 즉시 이미지를 뷰에 나타내는 것입니다. 따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰(UI)가 먼저 로딩된 후에 차례로 다운로드 작업을 완료해 나가는 것입니다.   
 이번 단계에서는 `MoviesTableVC`가 로딩된 이후에 차례로 영화의 포스터 이미지를 다운로드 받아 테이블 뷰에 표시하는 기능을 구현할 것입니다. 우선 [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)의 `getPosterImage()` 메소드를 구현하고, [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)의 `tableView(cellForRowAt)` 메소드를 살펴봅시다.
 
 
@@ -302,16 +302,19 @@ SAX 타입은 XML 데이터를 순차적으로 읽어나가면서 원하는 요�
         return
     }
 ```
-여기서는 `movie` 객체의 `imageURL`이 존재하는지 먼저 확인한 다음, `imageURL`을 가지고 `URL` 객체를 생성하여 이를 가지고 이미지 데이터를 불러옵니다. 이미지 데이터를 사용해서 `UIImage`를 생성하고, `self`의 `image`에 저장합니다.  
+여기서는 `movie` 객체의 `imageURL`이 존재하는지 먼저 확인한 다음, `imageURL`을 가지고 `URL` 객체를 생성하여 이를 가지고 이미지 데이터를 불러옵니다. 이미지 데이터를 사용해서 `UIImage`를 생성하고, `self.image`에 저장합니다.  
 
 
-##### MoviesTableViewController.swift
+##### MoviesTableViewController.swift의 `cellForRowAt()` 메소드
 ``` Swift
+// 포스터 이미지를 다운로드하는 DispatchQueue 생성
+let posterImageQueue = DispatchQueue(label: "posterImage")
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "movieCellIdentifier", for: indexPath) as! MoviesTableViewCell
         let movie = movies[indexPath.row]
 
-	// cell 구성 부분 생략
+        // cell 구성 부분 생략
 
         // Async activity
         // 영화 포스터 이미지 불러오기
@@ -319,20 +322,25 @@ SAX 타입은 XML 데이터를 순차적으로 읽어나가면서 원하는 요�
             cell.posterImageView.image = posterImage
         } else {
             cell.posterImageView.image = UIImage(named: "noImage")
-            DispatchQueue.main.async(execute: {
+            posterImageQueue.async(execute: {
                 movie.getPosterImage()
                 guard let thumbImage = movie.image else {
                     return
                 }
-                cell.posterImageView.image = thumbImage
+                DispatchQueue.main.async {
+                    cell.posterImageView.image = thumbImage
+                }
             })
         }
         return cell
     }
-```
-**9-10**: `image`가 이미 존재하면 즉시 이미지를 `cell`에 나타냅니다.  
-**11-20**: 이미지가 없으면, 우선 디폴트 이미지를 `cell`에 먼저 나타내고 비동기 작업 큐에 이미지 다운로드 작업을 넣어둔 다음, 이미지 다운로드 작업이 끝나면 포스터 이미지를 `cell`에 나타냅니다.    
 
+```
+**1-2**: 포스터 이미지를 다운로드하기 위한 비동기 작업 큐를 생성합니다. 큐의 레이블은 "posterImage"로 하겠습니다.
+**12-13**: `image`가 이미 존재하면 즉시 이미지를 `cell`에 나타냅니다.  
+**14-17**: 이미지가 다운로드 되어 있지 않으면, 디폴트 이미지를 `cell`에 먼저 나타내고 `posterImageQueue`에 이미지 다운로드 작업을 넣습니다.
+**18-20**: 이미지 다운로드에 실패했을 경우를 대비하여 `thumbImage`에 guard를 두어 해당 블럭을 빠져나가도록 합니다.
+**21-23**: 이미지 다운로드 작업이 완료되면 포스터 이미지를 `cell`에 나타내는 작업을 `main` 큐에 넣습니다. 뷰(View) 업데이트 작업은 `main` 큐에서 하도록 [Apple Developer](https://developer.apple.com/documentation/code_diagnostics/main_thread_checker)에 명시되어 있는데, 뷰 업데이트 작업을 메인 큐가 아닌 곳에서 했을 때 뷰가 업데이트 되지 않는 현상, 데이터 결함, 앱 충돌 등의 현상이 발생할 수 있기 때문입니다.
 
 
 ### STEP 3. SFSafariViewController 사용
@@ -357,8 +365,6 @@ override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: Inde
 
 ## 마치며
 지금까지 네이버 오픈API 중 '영화 검색'기능을 사용하는 방법에 대해서 배웠습니다. 이외에도 네이버에서 제공하는 오픈API에는 네아로(네이버 아이디로 로그인), 지도, 검색이 있으며, Clova의 음성 인식 기술과 음성 합성 기술, 얼굴 인식 기술, Papago의 기계 번역 기술 등 여러가지가 있습니다. 이 기술 블로그를 바탕으로 여러분의 애플리케이션을 더욱 더 발전시켜 보시기 바랍니다! :)
-
-
 
 
 iPhoneSDK 튜토리얼 2, 2012년 4월, 윤성관 고준일) 참조
