@@ -58,7 +58,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             // 에러가 있으면 리턴
             guard error == nil else {
-                print(error)
+                print(error as Any) // as Any는 지워도 됩니다!
                 return
             }
             
@@ -82,7 +82,7 @@ class MoviesTableViewController: UITableViewController, XMLParserDelegate{
             parser.delegate = self
             let success:Bool = parser.parse()
             if success {
-                print(self.strXMLData)
+                print(self.strXMLData as Any) // as Any는 지워도 됩니다!
             } else {
                 print("parse failure!")
             }
