@@ -36,7 +36,7 @@ by. Sujin Kim
 
 
 #### 코드
-먼저, [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)를 만들어 `Movie` 클래스를 만들어 줍니다.
+먼저, [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/NaverAPIExample/Model.swift)를 만들어 `Movie` 클래스를 만들어 줍니다.
 
 ``` Swift
 import Foundation
@@ -61,7 +61,7 @@ class Movie {
 모든 속성은 `Movie` 객체를 생성한 후에 값을 입력해줄 것이기 때문에, Optional로 처리합니다.   
 
 
-두 번째는 [SearchViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/SearchViewController.swift)입니다.
+두 번째는 [SearchViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/NaverAPIExample/SearchViewController.swift)입니다.
 ``` Swift
 class SearchViewController: UIViewController {
     @IBAction func searchButtonPressed(_ sender: Any) {
@@ -89,7 +89,7 @@ class SearchViewController: UIViewController {
 검색어를 입력 받고 결과를 표시하는 방법으로 뷰에 Search Bar를 만들어 두고  `UISearchController`를 이용하는 방법이 있습니다. 이 방법을 사용하면 한 개의 뷰에서 검색어를 입력하고 그 결과를 받아올 수 있습니다. 하지만 이번 블로그에서는 네이버 API를 사용하여 HTML 요청을 전송하는 방법에 초점을 맞추기 위해서 검색어를 입력하는 부분과 검색 결과를 출력하는 부분을 분리하였습니다. `UISearchController`에 대한 정보를 더 얻고 싶으시다면 [Apple Developer](https://developer.apple.com/documentation/uikit/uisearchcontroller) 페이지를 참고하시기 바랍니다.
 
 
-세 번째는 [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)입니다.
+세 번째는 [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/NaverAPIExample/MoviesTableViewController.swift)입니다.
 ``` Swift
 class MoviesTableViewController: UITableViewController, XMLParserDelegate{
     let clientID        = "huN1_ueBcLHV9AnTNwpi"    // ClientID
@@ -285,7 +285,7 @@ SAX 타입은 XML 데이터를 순차적으로 읽어나가면서 원하는 요�
 ### STEP 2. 비동기 작업
 다음은 **비동기 작업**에 대해서 알아봅시다.
 쇼핑 애플리케이션 사용 경험을 떠올려 보면, 테이블 뷰에 콘텐츠가 로딩된 후, 상품 이미지가 하나 둘 씩 나타나는 것을 보신 적이 있을 것입니다. 이는 웹으로부터 사진을 다운로드하느라 뷰가 늦게 로딩되는 것을 방지하기 위해서, 기본 이미지를 먼저 띄워 놓고, 백그라운드에서 이미지 다운로드가 완료되는 즉시 이미지를 뷰에 나타내는 것입니다. 따라서 비동기 작업 큐(Queue)에 사진 다운로드와 같은 작업을 넣어 두고, 뷰(UI)가 먼저 로딩된 후에 차례로 다운로드 작업을 완료해 나가는 것입니다.   
-이번 단계에서는 `MoviesTableVC`가 로딩된 이후에 차례로 영화의 포스터 이미지를 다운로드 받아 테이블 뷰에 표시하는 기능을 구현할 것입니다. 우선 [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/Model.swift)의 `getPosterImage()` 메소드를 구현하고, [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)의 `tableView(cellForRowAt)` 메소드를 살펴봅시다.
+이번 단계에서는 `MoviesTableVC`가 로딩된 이후에 차례로 영화의 포스터 이미지를 다운로드 받아 테이블 뷰에 표시하는 기능을 구현할 것입니다. 우선 [Model.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/NaverAPIExample/Model.swift)의 `getPosterImage()` 메소드를 구현하고, [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/NaverAPIExample/MoviesTableViewController.swift)의 `tableView(cellForRowAt)` 메소드를 살펴봅시다.
 
 
 ##### Model.swift
