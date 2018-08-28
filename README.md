@@ -86,6 +86,8 @@ class SearchViewController: UIViewController {
 
 먼저 `SearchVC`에서 `MoviesTableVC`로 향하는 `segue`를 연결해두고, '검색' 버튼을 눌렀을 때 `segue`를 실행합니다. `prepareForSegue()` 메소드에서는 `MoviesTableVC`의 `queryText` 필드에 텍스트 필드의 내용을 저장해줌으로써 다음 뷰로 검색어를 넘겨줍니다.  
 
+검색어를 입력 받고 결과를 표시하는 방법으로 뷰에 Search Bar를 만들어 두고  `UISearchController`를 이용하는 방법이 있습니다. 이 방법을 사용하면 한 개의 뷰에서 검색어를 입력하고 그 결과를 받아올 수 있습니다. 하지만 이번 블로그에서는 네이버 API를 사용하여 HTML 요청을 전송하는 방법에 초점을 맞추기 위해서 검색어를 입력하는 부분과 검색 결과를 출력하는 부분을 분리하였습니다. `UISearchController`에 대한 정보를 더 얻고 싶으시다면 [Apple Developer](https://developer.apple.com/documentation/uikit/uisearchcontroller) 페이지를 참고하시기 바랍니다.
+
 
 세 번째는 [MoviesTableViewController.swift](https://github.com/gfsusan/NaverAPIExample/blob/master/NaverAPIExample/MoviesTableViewController.swift)입니다.
 ``` Swift
