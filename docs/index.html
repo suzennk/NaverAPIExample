@@ -11,7 +11,7 @@
 <h3 id="-1">예제 애플리케이션 소개</h3>
 
 <p>이번 포스트에서는 <strong>영화 정보 애플리케이션</strong>을 만들 것입니다. 사용자로부터 영화 검색어를 입력받은 후, 네이버 오픈 API 호출을 통해 검색어와 일치하는 영화 정보를 불러와 테이블뷰에 표시합니다. 그리고 원하는 영화를 터치하면 각 영화의 세부 정보를 보여줍니다.
-<img src="tb000_media/0-1.png" alt="Application Example Image" style='height: 100%; width: 100%; object-fit: contain'/>
+<img src="tb000_media/0-1.png" alt="Application Example Image" width="1000"/>
 구현하고자 하는 핵심 기능은 <strong>네이버의 검색 API</strong>를 사용한 영화 검색 기능입니다. 영화 포스터 이미지 다운로드는 <strong>비동기 작업</strong>을 사용해 다운로드 작업을 뒤로 미루고, 포스터 이미지가 모두 다운로드 될 때까지 기다릴 필요 없이 바로 검색 결과를 확인할 수 있도록 테이블 뷰를 구성합니다. 마지막으로, <strong>HTTP Request</strong>를 사용하여 영화의 세부 정보를 보여주는 사파리 뷰를 구성합니다.</p>
 
 <h2 id="-2">시작하기</h2>
@@ -20,7 +20,7 @@
 
 <p>시작하기에 앞서 <a href="https://github.com/gfsusan/NaverAPIExample">GitHub</a>에서 스타터 프로젝트를 다운로드하여 각 단계를 따라가시면 됩니다.
 프로젝트를 처음부터 만드시고 싶으신 분들은 아래 사진과 같이 UI를 구성하시면 됩니다. 프로젝트를 만드실 때에는 <strong>애플리케이션 이름</strong>과 <strong>애플리케이션 Bundle ID</strong>를 기억해 두었다가 오픈API 신청 시 기입하시기 바랍니다.
-<img src="tb000_media/0-2.png" alt="Application UI" style='height: 100%; width: 100%; object-fit: contain'/></p>
+<img src="tb000_media/0-2.png" alt="Application UI" width="1000"/></p>
 
 <h3 id="step1api">STEP 1. 네이버 오픈 API</h3>
 
@@ -28,13 +28,13 @@
 
 <p>네이버 오픈 API를 사용하기 위해서는 네이버로부터 <strong>클라이언트 아이디</strong>와 <strong>클라이언트 시크릿</strong>을 발급받아야 합니다. 이는 네이버 오픈API 사용자가 인증된 사용자인지 확인하는 고유한 아이디와 비밀번호로, 네이버 개발자센터의 <strong>애플리케이션 등록</strong> 메뉴에서 <a href="https://developers.naver.com/apps/#/register">애플리케이션을 등록</a>하면 발급되는 값입니다.</p>
 
-<p><img src="tb000_media/1-1.png" alt="Issue ClientID and ClientSecret" style='height: 100%; width: 100%; object-fit: contain'/>
+<p><img src="tb000_media/1-1.png" alt="Issue ClientID and ClientSecret" width="1000"/>
 위와 같이 <strong>애플리케이션 이름</strong>을 프로젝트명과 동일하게 작성한 다음, <strong>사용 API</strong>를 <strong>검색</strong>으로 설정합니다. 마지막으로 <strong>비로그인 오픈API 서비스 환경</strong>에서 <strong>iOS 설정</strong>을 추가한 다음, Xcode 프로젝트 생성 시 <strong>애플리케이션의 Bundle ID</strong>를 정확하게 입력합니다.   </p>
 
 <h4 id="-4">클라이언트 아이디와 클라이언트 시크릿</h4>
 
 <p>애플리케이션 등록을 마치고 나면, <a href="https://developers.naver.com/apps/#/list">내 애플리케이션</a> 항목 아래 등록한 애플리케이션의 목록이 나타납니다. 자신의 애플리케이션명을 클릭하면, 애플리케이션 정보가 나타나며, 자신의 <strong>클라이언트 아이디</strong>와 <strong>클라이언트 시크릿</strong>을 확인할 수 있습니다.
-<img src="tb000_media/1-2.png" alt="Check CliendID and ClientSecret" style='height: 100%; width: 100%; object-fit: contain'/></p>
+<img src="tb000_media/1-2.png" alt="Check CliendID and ClientSecret" width="1000"/></p>
 
 <h4 id="-5">코드</h4>
 
